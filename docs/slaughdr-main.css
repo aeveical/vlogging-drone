@@ -776,11 +776,11 @@ html {
 
 @keyframes glow-text {
 	from {
-		filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.5));
+		filter: drop-shadow(0 0 20px rgb(213, 33, 33));
 	}
 
 	to {
-		filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.8));
+		filter: drop-shadow(0 0 30px rgb(77, 38, 193));
 	}
 }
 
