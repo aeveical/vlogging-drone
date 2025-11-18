@@ -1,1 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAUGHDR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="slaughdr-main.css" rel="stylesheet">
+<!--
 
+Tooplate 2144 Parallax Depth
+
+https://www.tooplate.com/view/2144-parallax-depth
+
+Free HTML CSS Template
+
+-->
+</head>
+<body>
+    <!-- Mouse Follower -->
+    <div class="mouse-follower" id="mouseFollower"></div>
+
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Hero Section with Parallax Layers -->
+    <div class="hero-container" id="hero">
+        <!-- Grid Overlay -->
+        <div class="grid-overlay">
+            <div class="grid-diagonal-1"></div>
+            <div class="grid-diagonal-2"></div>
+        </div>
+
+        <!-- Background Layer -->
+        <div class="parallax-layer layer-bg"></div>
+        
+        <!-- Floating Elements Layer -->
+        <div class="parallax-layer layer-float">
+            <!-- Bottom Left Rectangle Group -->
+            <div class="rectangles-bottom-left">
+                <div class="rect rect-bl-1"></div>
+                <div class="rect rect-bl-2"></div>
+                <div class="rect rect-bl-3"></div>
+                <div class="rect rect-bl-4"></div>
+                <div class="rect rect-bl-5"></div>
+                <div class="rect rect-bl-6"></div>
+            </div>
+            
+            <!-- Top Right Rectangle Group -->
+            <div class="rectangles-top-right">
+                <div class="rect rect-tr-1"></div>
+                <div class="rect rect-tr-2"></div>
+                <div class="rect rect-tr-3"></div>
+                <div class="rect rect-tr-4"></div>
+            </div>
+        </div>
+        
+        <!-- Foreground Layer -->
+        <div class="parallax-layer layer-fg">
+            <div class="glowing-orb orb-1"></div>
+            <div class="glowing-orb orb-2"></div>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">SLAUGHDR</h1>
+            <p class="hero-subtitle">The Ultimate Vlogging Drone</p>
+            <a href="#about" class="cta-button">Our Process</a>
+        </div>
+
+        <!-- Navigation -->
+        <a href="#about" class="nav-btn-next" title="Next Section">
+            <div class="pyramid">
+                <div class="pyramid-face"></div>
+                <div class="pyramid-face"></div>
+                <div class="pyramid-face"></div>
+                <div class="pyramid-face"></div>
+                <div class="pyramid-base"></div>
+                <span class="pyramid-inner">▼</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- About Section -->
+    <section class="content-section section-gradient" id="about">
+        <div class="container">
+            <h2 class="section-title">About The Experience</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Crafted with Precision</h3>
+                    <p>This parallax experience represents the cutting edge of modern web design, where every scroll reveals new dimensions and every interaction creates magic. Built with pure CSS and vanilla JavaScript, it demonstrates the power of creative coding.</p>
+                    <p>Our multi-layered approach creates genuine depth perception, with background elements moving slower than foreground ones, mimicking real-world parallax. Each layer is carefully orchestrated to provide smooth, butter-like scrolling performance.</p>
+                    
+                    <div class="about-boxes">
+                        <div class="info-box">
+                            <div class="box-icon">
+                                ⚡
+                                <span class="box-number">1</span>
+                            </div>
+                            <h4 class="box-title">Performance</h4>
+                            <p class="box-description">Optimized animations with 60fps smooth scrolling and GPU acceleration for flawless experience.</p>
+                        </div>
+                        <div class="info-box">
+                            <div class="box-icon">
+                                🎯
+                                <span class="box-number">2</span>
+                            </div>
+                            <h4 class="box-title">Precision</h4>
+                            <p class="box-description">Pixel-perfect design with carefully calculated parallax speeds and seamless transitions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="orbit-container">
+                        <div class="orbit orbit-1">
+                            <div class="orbit-dot dot-1"></div>
+                        </div>
+                        <div class="orbit orbit-2">
+                            <div class="orbit-dot dot-2"></div>
+                        </div>
+                        <div class="orbit orbit-3">
+                            <div class="orbit-dot dot-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with 3D Carousel -->
+    <section class="content-section features-section-bg" id="features">
+        <!-- Grid Overlay -->
+        <div class="features-grid-overlay">
+            <div class="features-grid"></div>
+            <div class="features-grid-large"></div>
+        </div>
+        
+        <div class="container">
+            <h2 class="section-title">Layered Features</h2>
+            <div class="features-container">
+                <div class="carousel-3d" id="carousel">
+                    <div class="feature-card-3d" data-index="0">
+                        <span class="feature-number">01</span>
+                        <div class="feature-icon-3d">🚀</div>
+                        <h3 class="feature-title-3d">Speed Layers</h3>
+                        <p class="feature-description-3d">Multiple parallax layers moving at different speeds create realistic depth perception as you scroll through the experience.</p>
+                    </div>
+                    <div class="feature-card-3d" data-index="1">
+                        <span class="feature-number">02</span>
+                        <div class="feature-icon-3d">✨</div>
+                        <h3 class="feature-title-3d">3D Transforms</h3>
+                        <p class="feature-description-3d">Elements respond to interactions with smooth 3D rotations and translations, creating an engaging visual hierarchy.</p>
+                    </div>
+                    <div class="feature-card-3d" data-index="2">
+                        <span class="feature-number">03</span>
+                        <div class="feature-icon-3d">🎨</div>
+                        <h3 class="feature-title-3d">Gradient Mastery</h3>
+                        <p class="feature-description-3d">Dynamic gradients and color transitions guide the eye through different depth levels, enhancing the parallax effect.</p>
+                    </div>
+                    <div class="feature-card-3d" data-index="3">
+                        <span class="feature-number">04</span>
+                        <div class="feature-icon-3d">💫</div>
+                        <h3 class="feature-title-3d">Floating Elements</h3>
+                        <p class="feature-description-3d">Cards and orbs float independently, each with unique animation timing to create organic movement patterns.</p>
+                    </div>
+                    <div class="feature-card-3d" data-index="4">
+                        <span class="feature-number">05</span>
+                        <div class="feature-icon-3d">🌊</div>
+                        <h3 class="feature-title-3d">Smooth Scrolling</h3>
+                        <p class="feature-description-3d">Optimized performance ensures buttery-smooth scrolling even with multiple animated layers and effects.</p>
+                    </div>
+                    <div class="feature-card-3d" data-index="5">
+                        <span class="feature-number">06</span>
+                        <div class="feature-icon-3d">🎯</div>
+                        <h3 class="feature-title-3d">Interactive Focus</h3>
+                        <p class="feature-description-3d">Mouse-following effects and hover states add another dimension of interactivity to the parallax experience.</p>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <div class="carousel-btn" id="prevBtn">◀</div>
+                    <div class="carousel-btn" id="nextBtn">▶</div>
+                </div>
+                <div class="carousel-indicators" id="indicators"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section section-gradient" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Dynamic Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=300&fit=crop" alt="Deep Space" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Deep Space</h3>
+                        <p class="gallery-subtitle">Infinite parallax layers</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=300&fit=crop" alt="Ocean Depths" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Ocean Depths</h3>
+                        <p class="gallery-subtitle">Underwater perspectives</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop" alt="Mountain Peaks" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Mountain Peaks</h3>
+                        <p class="gallery-subtitle">Elevation changes</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=600&h=300&fit=crop" alt="City Lights" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">City Lights</h3>
+                        <p class="gallery-subtitle">Urban depth fields</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&h=300&fit=crop" alt="Abstract Realm" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Abstract Realm</h3>
+                        <p class="gallery-subtitle">Geometric dimensions</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?w=600&h=300&fit=crop" alt="Time Warp" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Time Warp</h3>
+                        <p class="gallery-subtitle">Temporal layers</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1534996858221-380b92700493?w=600&h=300&fit=crop" alt="Northern Lights" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Aurora Borealis</h3>
+                        <p class="gallery-subtitle">Natural light phenomena</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=300&fit=crop" alt="Digital Matrix" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Digital Matrix</h3>
+                        <p class="gallery-subtitle">Cyber dimensions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<script src="tooplate-2144-parallax-scripts.js"></script>
+</body>
+</html>
