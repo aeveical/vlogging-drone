@@ -14,6 +14,8 @@ MODEL_PATH = "yolo11n.pt"
 D0_m   = 2.0       # meters at calibration
 h0_px  = 220.0     # bbox height in pixels observed at calibration distance
 CALIB_K = D0_m * h0_px  # proportionality constant K = D0 * h0
+X_MAX = 3820 # screen width
+Y_MAX = 2464 # screen height
 
 # Optional: if you prefer to assume an average person height, you can refine later using fx, but not required here.
 
@@ -144,6 +146,15 @@ while True:
             x1,y1,x2,y2= chosen
             # draw box
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 220, 0), thick)
+            # center of bounding box for drone stuff
+            cx = (x1 + x2) // 2
+            cy = (y1 + y2) // 2
+
+            yaw_angle = 1640 - cx # gets angle we need to yaw it
+            height_change = cy*0.0015 - 2 # gets the height we want to go to, normalize hover at 2m
+
+            # draw a small circle at the center
+            cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
 
             # label: confidence + distance
             label = f"person {c:.2f} | {Z_m:.2f} m"
