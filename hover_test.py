@@ -83,4 +83,9 @@ class Hover:
             0,0,0
         )
 
-    # ---------------- MAIN SCRIPT ---------------- #
+    def start(self):
+        self.wait_heartbeat()
+        self.set_mode("GUIDED")
+        self.arm()
+        self.takeoff(5)
+        self.hover(10)
