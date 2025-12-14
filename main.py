@@ -8,8 +8,8 @@ autonomous = False
 DRONE_PATH = ''
 # ---- MAIN ---- #
 
-DRONE_PATH = '/dev/ttyTHS1' 
-# might also be /dev/ttyAMA0
+# DRONE_PATH = '/dev/ttyTHS1' 
+DRONE_PATH = '/dev/ttyAMA0'
 BAUD = 921600
 #probably idk tho
 
