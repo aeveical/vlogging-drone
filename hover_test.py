@@ -144,8 +144,8 @@ class Hover:
             msg = self.master.recv_match(type = 'HEARTBEAT',blocking=True)
             print("Waiting for mode")
 
-            if msg.get_type() == 'HEARTBEAT':
-                mode = mavutil.mode_string_v10(msg)
-                print(f"Flight mode: {mode}")
-                if mode == "GUIDED_NOGPS":
-                    self.autonomous = True
+#            if msg.get_type() == 'HEARTBEAT':
+            mode = mavutil.mode_string_v10(msg)
+            print(f"Flight mode: {mode}")
+            if mode == "GUIDED_NOGPS":
+                self.autonomous = True
