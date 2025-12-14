@@ -3,7 +3,7 @@ import time
 
 class Hover:
 
-    def __init__(self, serial, baud, yaw_angle, new_alt, alt_acc, pitch, throttle):
+    def __init__(self, serial, baud, yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous):
         self.serial = serial
         self.baud = baud
         self.yaw_angle = yaw_angle
@@ -11,6 +11,7 @@ class Hover:
         self.alt_acc = alt_acc
         self.pitch = pitch
         self.throttle = throttle
+        self.autonomous = autonomous
         self.master = mavutil.mavlink_connection(serial, baud)
 
     def wait_heartbeat(self):
@@ -137,3 +138,17 @@ class Hover:
         )
         self.master.mav.send(message)
         print(message)
+
+    def wait_for_control(self):
+        while self.autonomous == False:
+            msg = self.master.recv_match(blocking=True)
+
+            if msg.get_type() == 'GLOBAL_POSITION_INT':
+                alt_m = msg.relative_alt / 1000.0   # mm → meters
+                print(f"Altitude (AGL): {alt_m:.2f} m")
+
+            if msg.get_type() == 'HEARTBEAT':
+                mode = mavutil.mode_string_v10(msg)
+                print(f"Flight mode: {mode}")
+                if mode == "GUIDED":
+                    self.autonomous = False
