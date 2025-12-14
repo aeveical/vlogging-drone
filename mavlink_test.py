@@ -18,5 +18,3 @@ class Mavlink:
         )
 
     def set_yaw(self):
-
-
