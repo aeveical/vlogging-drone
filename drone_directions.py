@@ -179,7 +179,6 @@ class directions:
                     cv2.rectangle(frame, (x1, max(y1 - th - 8, 0)), (x1 + tw + 4, y1), (0, 220, 0), -1)
                     cv2.putText(frame, label, (x1 + 2, max(y1 - 5, 0)),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), max(1, thick-1), cv2.LINE_AA)
-## WE PROBABLU DONT NEED FPS OVERLAY ##
             # FPS overlay
             now = time.time()
             fps = 1.0 / (now - prev) if now > prev else 0.0

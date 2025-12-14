@@ -3,9 +3,15 @@ import time
 
 class Hover:
 
-    def __init__(self, serial):
+    def __init__(self, serial, baud, yaw_angle, new_alt, alt_acc, pitch, throttle):
         self.serial = serial
-        self.master = mavutil.mavlink_connection(serial)
+        self.baud = baud
+        self.yaw_angle = yaw_angle
+        self.new_alt = new_alt
+        self.alt_acc = alt_acc
+        self.pitch = pitch
+        self.throttle = throttle
+        self.master = mavutil.mavlink_connection(serial, baud)
 
     def wait_heartbeat(self):
         print("Waiting for heartbeat…")
@@ -85,7 +91,49 @@ class Hover:
 
     def start(self):
         self.wait_heartbeat()
-        self.set_mode("GUIDED")
         self.arm()
+        self.set_mode("GUIDED")
         self.takeoff(5)
         self.hover(10)
+
+    def set_yaw(self):
+        message = self.master.mav.command_long_encode(
+            self.master.target_system,  # Target system ID
+            self.master.target_component,  # Target component ID
+            mavutil.mavlink.MAV_CMD_CONDITION_YAW,  # ID of command to send
+            0,  # Confirmation
+            abs(self.yaw_angle), # Yaw angle
+            0,       # yaw speed (set to default rn)
+            1 if self.yaw_angle >= 0 else -1, #CW (1) or CCW (-1)
+            1,       # choose relative yaw (0 = absolute)
+            0,       # unused
+            0,       # unused
+            0        # unused
+        )
+        self.master.mav.send(message)
+        print(message)
+    
+    def approach(self): ## THIS IS HELLA SKETCH
+        self.master.mav.rc_channels_override_send(
+            self.master.target_system,
+            self.master.target_component,
+            0, self.pitch, self.throttle, self.yaw_angle, 
+            0, 0, 0, 0         
+        )
+
+    def change_alt(self):
+        message  = self.master.mav.command_long_encode(
+            self.master.target_system,
+            self.master.target_component,
+            mavutil.mavlink.MAV_CMD_CONDITION_YAW,
+            0, # confirmation
+            self.alt_acc,
+            0,
+            0,
+            0,
+            0,
+            0,
+            self.new_alt
+        )
+        self.master.mav.send(message)
+        print(message)
