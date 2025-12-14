@@ -18,13 +18,20 @@ alt_acc = 0
 pitch = 0
 throttle = 0
 
+print("Starting")
 #Assuming jetson connected to telem1: tx rx gnd
 main_directions = directions(0, 0, 0, 3, 0, 0, 0, 0) # imports all the stats starting at 0
+print("initialized direction")
 main_directions.start_cam()
+print("cam started")
 main_directions.get_directions()
+print("boom")
 drone_hover = Hover(DRONE_PATH, BAUD, 0, 0, 0, 0, 0, autonomous)
+print('hover initialized')
 drone_hover.wait_for_control()
+print('waiting for control')
 while autonomous == True:
+    print('autonomous')
     main_directions = directions(0, 0, 0, 3, 0, 0, 0, 0) # imports all the stats starting at 0
 #    main_directions.start_cam()
     main_directions.get_directions()
