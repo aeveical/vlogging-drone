@@ -141,15 +141,11 @@ class Hover:
 
     def wait_for_control(self):
         while self.autonomous == False:
-            msg = self.master.recv_match(blocking=True)
+            msg = self.master.recv_match(type = 'HEARTBEAT',blocking=True)
             print("Waiting for mode")
-
-            if msg.get_type() == 'GLOBAL_POSITION_INT':
-                alt_m = msg.relative_alt / 1000.0   # mm → meters
-                print(f"Altitude (AGL): {alt_m:.2f} m")
 
             if msg.get_type() == 'HEARTBEAT':
                 mode = mavutil.mode_string_v10(msg)
                 print(f"Flight mode: {mode}")
-                if mode == "GUIDED":
+                if mode == "GUIDED_NOGPS":
                     self.autonomous = True
