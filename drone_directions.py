@@ -31,16 +31,17 @@ class directions:
 
     # ----- model and camera -----
 
-    # gst = (
-    #     "nvarguscamerasrc sensor-id=0 ! "
-    #     "video/x-raw(memory:NVMM),width=1280,height=720,framerate=30/1 ! "
-    #     "nvvidconv ! video/x-raw, format=BGRx ! "
-    #     "videoconvert ! video/x-raw, format=BGR ! "
-    #     "appsink drop=1 max-buffers=1 sync=false"
-    # )
+
     def start_cam(self):
+        gst = (
+            "nvarguscamerasrc sensor-id=0 ! "
+            "video/x-raw(memory:NVMM),width=1280,height=720,framerate=30/1 ! "
+            "nvvidconv ! video/x-raw, format=BGRx ! "
+            "videoconvert ! video/x-raw, format=BGR ! "
+            "appsink drop=1 max-buffers=1 sync=false"
+        )
         self.model = YOLO(directions.MODEL_PATH)
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
         if not self.cap.isOpened():
             raise RuntimeError("Failed to open camera")
 

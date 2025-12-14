@@ -22,7 +22,7 @@ throttle = 0
 main_directions = directions(0, 0, 0, 3, 0, 0, 0, 0) # imports all the stats starting at 0
 main_directions.start_cam()
 main_directions.get_directions()
-drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
+drone_hover = Hover(DRONE_PATH, BAUD, 0, 0, 0, 0, 0, autonomous)
 drone_hover.wait_for_control()
 while autonomous == True:
     main_directions = directions(0, 0, 0, 3, 0, 0, 0, 0) # imports all the stats starting at 0
