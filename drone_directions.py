@@ -85,106 +85,110 @@ class directions:
     def get_directions(self):
         prev = time.time() # unused?
         prev_box=None
-        ok, frame = self.cap.read()
+        i = 0
+        for i in range(10):
+            ok, frame = self.cap.read()
+            if not ok:
+                break
 
-        results = self.model.predict(
-            frame,
-            imgsz=directions.ENGINE_IMGSZ,
-            classes=[0],       # person only
-            conf=0.40,
-            iou=0.45,
-            max_det=20,
-            verbose=False
-        )
-        r = results[0]
-        boxes=r.boxes
+            results = self.model.predict(
+                frame,
+                imgsz=directions.ENGINE_IMGSZ,
+                classes=[0],       # person only
+                conf=0.40,
+                iou=0.45,
+                max_det=20,
+                verbose=False
+            )
+            r = results[0]
+            boxes=r.boxes
 
-        detections=[]
+            detections=[]
 
-        if boxes is not None and len(r.boxes) > 0: # probably a pylance issue
-            
-            xyxy = boxes.xyxy
-            confs = boxes.conf
-            clss  = boxes.cls
-            if xyxy.is_cuda: # pylance
-                xyxy = xyxy.cpu(); confs = confs.cpu(); clss = clss.cpu()
-            xyxy = xyxy.numpy(); confs = confs.numpy(); clss = clss.numpy() # These errors are just a pylance thing
+            if boxes is not None and len(r.boxes) > 0: # probably a pylance issue
+                
+                xyxy = boxes.xyxy
+                confs = boxes.conf
+                clss  = boxes.cls
+                if xyxy.is_cuda: # pylance
+                    xyxy = xyxy.cpu(); confs = confs.cpu(); clss = clss.cpu()
+                xyxy = xyxy.numpy(); confs = confs.numpy(); clss = clss.numpy() # These errors are just a pylance thing
 
-            h, w = frame.shape[:2]
-            thick = max(1, int(round((h + w) / 600)))
+                h, w = frame.shape[:2]
+                thick = max(1, int(round((h + w) / 600)))
 
-            for (x1, y1, x2, y2), c, cls in zip(xyxy, confs, clss):
-                if int(cls) == 0:
-                    detections.append((int(x1), int(y1), int(x2), int(y2)))
-                x1, y1, x2, y2 = map(int, (x1, y1, x2, y2))
-                bbox_h = max(1, y2 - y1)
-                Z_m = self.estimate_distance_m(bbox_h)
+                for (x1, y1, x2, y2), c, cls in zip(xyxy, confs, clss):
+                    if int(cls) == 0:
+                        detections.append((int(x1), int(y1), int(x2), int(y2)))
+                    x1, y1, x2, y2 = map(int, (x1, y1, x2, y2))
+                    bbox_h = max(1, y2 - y1)
+                    Z_m = self.estimate_distance_m(bbox_h)
 
-        chosen = None
+            chosen = None
 
-        if prev_box is None:
-            # first frame → choose largest (closest) person
-            if len(detections) > 0:
-                detections.sort(key=lambda b: (b[2]-b[0])*(b[3]-b[1]), reverse=True)
-                chosen = detections[0]
-                prev_box = chosen
-        else:
-            # compute IOU vs previous frame box
-            best_iou = 0
-            best_box = None
-
-            for det in detections:
-                score = self.iou(prev_box, det)
-                if score > best_iou:
-                    best_iou = score
-                    best_box = det
-
-            if best_iou > 0.1:
-                # good match → same person
-                chosen = best_box
-                prev_box = best_box
-            else:
-                # target lost → pick largest person
+            if prev_box is None:
+                # first frame → choose largest (closest) person
                 if len(detections) > 0:
                     detections.sort(key=lambda b: (b[2]-b[0])*(b[3]-b[1]), reverse=True)
                     chosen = detections[0]
                     prev_box = chosen
+            else:
+                # compute IOU vs previous frame box
+                best_iou = 0
+                best_box = None
 
-        if chosen is not None:
-                x1,y1,x2,y2= chosen
-                # draw box
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 220, 0), thick)
-                # center of bounding box for drone stuff
-                cx = (x1 + x2) // 2
-                cy = (y1 + y2) // 2
+                for det in detections:
+                    score = self.iou(prev_box, det)
+                    if score > best_iou:
+                        best_iou = score
+                        best_box = det
 
-                self.yaw_angle = 1640 - cx # gets angle we need to yaw it
-                self.height_change = cy*0.0015 - 2 # gets the height we want to go to, normalize hover at 2m
+                if best_iou > 0.1:
+                    # good match → same person
+                    chosen = best_box
+                    prev_box = best_box
+                else:
+                    # target lost → pick largest person
+                    if len(detections) > 0:
+                        detections.sort(key=lambda b: (b[2]-b[0])*(b[3]-b[1]), reverse=True)
+                        chosen = detections[0]
+                        prev_box = chosen
+
+            if chosen is not None:
+                    x1,y1,x2,y2= chosen
+                    # draw box
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 220, 0), thick)
+                    # center of bounding box for drone stuff
+                    cx = (x1 + x2) // 2
+                    cy = (y1 + y2) // 2
+
+                    self.yaw_angle = 1640 - cx # gets angle we need to yaw it
+                    self.height_change = cy*0.0015 - 2 # gets the height we want to go to, normalize hover at 2m
 
 
 ## ---- for the jetson this is the last of the code we need but we'll keep the rest for testing --- ##
 
-                # draw a small circle at the center
-                cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+                    # draw a small circle at the center
+                    cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
 
-                # label: confidence + distance
-                label = f"person {c:.2f} | {Z_m:.2f} m"
-                # background for readability
-                (tw, th), bl = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.55, max(1, thick-1))
-                cv2.rectangle(frame, (x1, max(y1 - th - 8, 0)), (x1 + tw + 4, y1), (0, 220, 0), -1)
-                cv2.putText(frame, label, (x1 + 2, max(y1 - 5, 0)),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), max(1, thick-1), cv2.LINE_AA)
-        # FPS overlay
-        now = time.time()
-        fps = 1.0 / (now - prev) if now > prev else 0.0
-        prev = now
-        cv2.putText(frame, f"FPS: {fps:.1f}", (8, 24),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
+                    # label: confidence + distance
+                    label = f"person {c:.2f} | {Z_m:.2f} m"
+                    # background for readability
+                    (tw, th), bl = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.55, max(1, thick-1))
+                    cv2.rectangle(frame, (x1, max(y1 - th - 8, 0)), (x1 + tw + 4, y1), (0, 220, 0), -1)
+                    cv2.putText(frame, label, (x1 + 2, max(y1 - 5, 0)),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), max(1, thick-1), cv2.LINE_AA)
+            # FPS overlay
+            now = time.time()
+            fps = 1.0 / (now - prev) if now > prev else 0.0
+            prev = now
+            cv2.putText(frame, f"FPS: {fps:.1f}", (8, 24),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
 
-        cv2.imshow(self.window_name, frame)
-        k = cv2.waitKey(1) & 0xFF
-        if k == ord('q') or k == 27:
-            break
+            cv2.imshow(self.window_name, frame)
+            k = cv2.waitKey(1) & 0xFF
+            if k == ord('q') or k == 27:
+                break
 
     def end_cv(self):
         self.cap.release()
