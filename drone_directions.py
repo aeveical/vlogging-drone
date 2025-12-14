@@ -83,11 +83,9 @@ class directions:
         union = areaA + areaB - interArea + 1e-6  # avoid divide by zero
         return interArea / union
 
-
-    prev_box=None
     
     def get_directions(self):
-
+        prev_box=None
         while True:
             ok, frame = self.cap.read()
             if not ok:
