@@ -56,8 +56,6 @@ class directions:
                 break
             self.model.predict(f, imgsz=directions.ENGINE_IMGSZ, classes=[0], conf=0.4, iou=0.45, max_det=20, verbose=False)
 
-#        prev = time.time() # unused?
-
     def estimate_distance_m(self, bbox_h_px: float, eps: float = 1e-6) -> float:
         # Z ≈ K / h_px where K = D0 * h0 from calibration
         return float(directions.CALIB_K / max(bbox_h_px, eps))
@@ -85,6 +83,7 @@ class directions:
 
     
     def get_directions(self):
+        prev = time.time() # unused?
         prev_box=None
         while True:
             ok, frame = self.cap.read()
