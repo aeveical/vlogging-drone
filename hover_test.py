@@ -14,7 +14,7 @@ class Hover:
         self.autonomous = autonomous
         self.master = mavutil.mavlink_connection(serial, baud)
 
-    def wait_heartbeat(self):
+    def wait_for_heartbeat(self):
         print("Waiting for heartbeat…")
         print("Master is")
         print(self.master)
@@ -169,9 +169,11 @@ class Hover:
             msg = self.master.recv_match(blocking=True, timeout=5)
 
             if msg is None:
+                print("NONE")
                 continue
 
             if msg.get_type() != 'HEARTBEAT':
+                print("Not heartbeat")
                 continue
 
             mode = mavutil.mode_string_v10(msg)
