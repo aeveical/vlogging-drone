@@ -193,3 +193,7 @@ class directions:
     def end_cv(self):
         self.cap.release()
         cv2.destroyAllWindows()
+    
+    def run_cv(self):
+        self.start_cam()
+        self.get_directions()
