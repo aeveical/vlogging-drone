@@ -32,7 +32,8 @@ print("initialized direction")
 #print("cam started")
 #main_directions.get_directions()
 #print("boom")
-print("Autonomous", autonomous)
+print("Autonomous", drone_hover.autonomous)
+autonomous = drone_hover.autonomous
 main_directions.run_cv()
 while drone_hover.autonomous == True:
     print('autonomous')
