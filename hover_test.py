@@ -74,7 +74,8 @@ class Hover:
         start = time.time()
         while time.time() - start < duration_sec:
             self.master.mav.set_position_target_local_ned_send(
-                int(time.time()*1000),
+                0,
+#                int(time.time()*1000),
                 self.master.target_system,
                 self.master.target_component,
                 mavutil.mavlink.MAV_FRAME_LOCAL_NED,
