@@ -18,6 +18,9 @@ class Hover:
         print("Waiting for heartbeat…")
         print("Master is")
         print(self.master)
+        print("Syncing MAVLink...")
+        for _ in range(20):
+            self.master.recv_match(blocking=True, timeout=1)
         msg = self.master.recv_match(blocking=True, timeout=5)
         print(msg)
 #        self.master.wait_heartbeat()
@@ -146,6 +149,7 @@ class Hover:
     def wait_for_control(self):
         while self.autonomous == False:
             msg = self.master.recv_match(blocking=True, timeout=5)
+            print(self.autonomous)
 
 #            if msg.get_type() == 'HEARTBEAT'
             if msg:
@@ -154,3 +158,24 @@ class Hover:
                 print(f"Flight mode: {mode}")
                 if mode == "GUIDED_NOGPS":
                     self.autonomous = True
+
+    def wait_for_control_v2(self):
+        print("Waiting for GUIDED_NOGPS...")
+
+        # ENSURE parser is synced
+        self.master.wait_heartbeat()
+
+        while not self.autonomous:
+            msg = self.master.recv_match(blocking=True, timeout=5)
+
+            if msg is None:
+                continue
+
+            if msg.get_type() != 'HEARTBEAT':
+                continue
+
+            mode = mavutil.mode_string_v10(msg)
+            print("Mode:", mode)
+
+            if mode == "GUIDED_NOGPS":
+                self.autonomous = True
