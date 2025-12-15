@@ -179,5 +179,5 @@ class Hover:
             mode = mavutil.mode_string_v10(msg)
             print("Mode:", mode)
 
-            if mode == "GUIDED_NOGPS":
+            if mode == "ALT_HOLD":
                 self.autonomous = True
