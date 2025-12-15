@@ -32,7 +32,7 @@ main_directions.start_cam()
 print("cam started")
 main_directions.get_directions()
 print("boom")
-while autonomous == True:
+while drone_hover.autonomous == True:
     print('autonomous')
     main_directions = directions(0, 0, 0, 3, 0, 0, 0, 0) # imports all the stats starting at 0
 #    main_directions.start_cam()
