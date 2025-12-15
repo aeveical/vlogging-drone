@@ -22,6 +22,8 @@ print("Starting")
 #Assuming jetson connected to telem1: tx rx gnd
 drone_hover = Hover(DRONE_PATH, BAUD, 0, 0, 0, 0, 0, autonomous)
 print('hover initialized')
+drone_hover.wait_heartbeat()
+print("Hearbeat Recieved")
 drone_hover.wait_for_control()
 print('waiting for control')
 main_directions = directions(0, 0, 0, 3, 0, 0, 0, 0) # imports all the stats starting at 0
