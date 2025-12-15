@@ -145,7 +145,7 @@ class Hover:
 
     def wait_for_control(self):
         while self.autonomous == False:
-            msg = self.master.recv_match(type = 'HEARTBEAT',blocking=True)
+            msg = self.master.recv_match(type = 'HEARTBEAT',blocking=True, timeout=5)
             print("Waiting for mode")
 
 #            if msg.get_type() == 'HEARTBEAT':
