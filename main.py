@@ -44,7 +44,8 @@ while drone_hover.autonomous == True:
         #the target or doesnt see one, hover up to 2 meters
         drone_hover.start()
     else:
-        drone_hover.hover()
+        drone_hover.takeoff(2)
+        print("hovering")
     
     drone_hover.set_yaw() # straight up yawing it
     dist_change = main_directions.distance - 2

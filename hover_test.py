@@ -87,7 +87,7 @@ class Hover:
             )
             time.sleep(0.2)
     
-    def takeoff(self):
+    def takeoff(self, height):
         self.master.arducopter_arm()
         self.master.motors_armed_wait()
         self.master.mav.command_long_send(
@@ -96,7 +96,7 @@ class Hover:
         mavutil.mavlink.MAV_CMD_NAV_TAKEOFF,
         0,
         0, 0, 0, 0,
-        0, 0, 2.0   # take off to 2 meters
+        0, 0, height   # take off to 2 meters
 )
 
     def land(self):
@@ -115,7 +115,7 @@ class Hover:
         self.arm()
         self.set_mode("ALT_HOLD")
         self.takeoff(5)
-        self.hover(10)
+        self.takeoff(2.0)
 
     def set_yaw(self):
         message = self.master.mav.command_long_encode(
