@@ -22,7 +22,6 @@ class Hover:
         print(msg)
 #        self.master.wait_heartbeat()
         print("Heartbeat received from system", self.master.target_system)
-        return msg
 
     def set_mode(self, mode_name):
         mode_id = self.master.mode_mapping()[mode_name]
@@ -146,7 +145,8 @@ class Hover:
 
     def wait_for_control(self):
         while self.autonomous == False:
-            msg = self.wait_heartbeat()
+            msg = self.master.recv_match(blocking=True, timeout=5)
+
 #            if msg.get_type() == 'HEARTBEAT'
             if msg:
                 print(msg)
