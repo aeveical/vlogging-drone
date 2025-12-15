@@ -10,7 +10,7 @@ DRONE_PATH = ''
 
 # DRONE_PATH = '/dev/ttyTHS1' 
 DRONE_PATH = '/dev/ttyAMA0'
-BAUD = 921600
+BAUD = 57600
 #probably idk tho
 
 new_alt = 0

@@ -16,6 +16,8 @@ class Hover:
 
     def wait_heartbeat(self):
         print("Waiting for heartbeat…")
+        print("Master is")
+        print(self.master)
         self.master.wait_heartbeat()
         print("Heartbeat received from system", self.master.target_system)
 
