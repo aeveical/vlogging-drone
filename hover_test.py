@@ -77,6 +77,7 @@ class Hover:
             time.sleep(0.2)
     
     def takeoff(self, height):
+        self.master.set_mode_apm('GUIDED')
         self.master.arducopter_arm()
         self.master.motors_armed_wait()
         self.master.mav.command_long_send(
@@ -86,7 +87,7 @@ class Hover:
         0,
         0, 0, 0, 0,
         0, 0, height   # take off to 2 meters
-)
+    )
 
     def land(self):
         print("Landing…")
