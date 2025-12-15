@@ -86,6 +86,18 @@ class Hover:
                 0,0
             )
             time.sleep(0.2)
+    
+    def takeoff(self):
+        self.master.arducopter_arm()
+        self.master.motors_armed_wait()
+        self.master.mav.command_long_send(
+        self.master.target_system,
+        self.master.target_component,
+        mavutil.mavlink.MAV_CMD_NAV_TAKEOFF,
+        0,
+        0, 0, 0, 0,
+        0, 0, 2.0   # take off to 2 meters
+)
 
     def land(self):
         print("Landing…")
