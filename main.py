@@ -8,8 +8,8 @@ autonomous = False
 DRONE_PATH = ''
 # ---- MAIN ---- #
 
-# DRONE_PATH = '/dev/ttyTHS1' 
-DRONE_PATH = '/dev/ttyAMA0'
+DRONE_PATH = '/dev/ttyTHS1' 
+# DRONE_PATH = '/dev/ttyAMA0'
 BAUD = 57600
 #probably idk tho
 
@@ -22,7 +22,7 @@ print("Starting")
 #Assuming jetson connected to telem1: tx rx gnd
 drone_hover = Hover(DRONE_PATH, BAUD, 0, 0, 0, 0, 0, autonomous)
 print('hover initialized')
-drone_hover.wait_heartbeat()
+drone_hover.wait_for_heartbeat()
 print("Hearbeat Recieved")
 drone_hover.wait_for_control_v2()
 print('waiting for control')
