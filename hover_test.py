@@ -18,7 +18,9 @@ class Hover:
         print("Waiting for heartbeat…")
         print("Master is")
         print(self.master)
-        self.master.wait_heartbeat()
+        msg = self.master.recv_match(blocking=True, timeout=5)
+        print(msg)
+#        self.master.wait_heartbeat()
         print("Heartbeat received from system", self.master.target_system)
 
     def set_mode(self, mode_name):
