@@ -69,7 +69,7 @@ class Hover:
                 self.master.target_component,
                 mavutil.mavlink.MAV_FRAME_LOCAL_NED,
                 type_mask,
-                0,0,0,
+                0,0,-2,
                 0,0,0,
                 0,0,0,
                 0,0
