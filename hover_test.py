@@ -147,8 +147,9 @@ class Hover:
     def wait_for_control(self):
         while self.autonomous == False:
             msg = self.wait_heartbeat()
-#            if msg.get_type() == 'HEARTBEAT':
+#            if msg.get_type() == 'HEARTBEAT'
             if msg:
+                print(msg)
                 mode = mavutil.mode_string_v10(msg)
                 print(f"Flight mode: {mode}")
                 if mode == "GUIDED_NOGPS":
