@@ -101,7 +101,7 @@ class Hover:
     def start(self):
         self.wait_heartbeat()
         self.arm()
-        self.set_mode("GUIDED")
+        self.set_mode("ALT_HOLD")
         self.takeoff(5)
         self.hover(10)
 

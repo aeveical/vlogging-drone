@@ -50,8 +50,8 @@ while drone_hover.autonomous == True:
     dist_change = main_directions.distance - 2
 #    drone = Mavlink(DRONE_PATH, 0, main_directions.yaw_angle, 0)
 #    drone.approach_target_rc_override()
-    if main_directions.distance < 1.5:
-        drone_hover.set_mode("LOITER") # Goes back to loiter if it gets close to someone
+#    if main_directions.distance < 1.5:
+#        drone_hover.set_mode("STABILIZE") # Goes back to loiter if it gets close to someone
 
 #Mission planner commands:
 #FLTMODE1 = STABILIZE -- RC controlled
