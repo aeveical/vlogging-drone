@@ -32,6 +32,7 @@ print("initialized direction")
 #print("cam started")
 #main_directions.get_directions()
 #print("boom")
+print("Autonomous", autonomous)
 main_directions.run_cv()
 while drone_hover.autonomous == True:
     print('autonomous')
@@ -48,6 +49,7 @@ while drone_hover.autonomous == True:
         print("hovering")
     
     drone_hover.set_yaw() # straight up yawing it
+    print("yawing it")
     dist_change = main_directions.distance - 2
 #    drone = Mavlink(DRONE_PATH, 0, main_directions.yaw_angle, 0)
 #    drone.approach_target_rc_override()

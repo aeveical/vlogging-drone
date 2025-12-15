@@ -47,17 +47,6 @@ class Hover:
         self.master.motors_armed_wait()
         print("Armed.")
 
-    def takeoff(self, alt):
-        print(f"Takeoff to {alt} m…")
-        self.master.mav.command_long_send(
-            self.master.target_system,
-            self.master.target_component,
-            mavutil.mavlink.MAV_CMD_NAV_TAKEOFF,
-            0,
-            0,0,0,0,
-            0,0,alt
-        )
-
     def hover(self, duration_sec=10):
         print(f"Hovering for {duration_sec} seconds…")
         type_mask = (
