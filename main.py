@@ -42,14 +42,15 @@ while drone_hover.autonomous == True:
     main_directions.get_directions()
     drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
 #    drone_hover.wait_for_control()
-    if (main_directions.height_change > 0) or (not main_directions.boxA): # If the drone is below
-        #the target or doesnt see one, hover up to 2 meters
-        drone_hover.start()
-    else:
-        drone_hover.hover()
-        print("hovering")
+#    if (main_directions.height_change > 0) or (not main_directions.boxA): # If the drone is below
+#        #the target or doesnt see one, hover up to 2 meters
+#        drone_hover.start()
+#    else:
+#        drone_hover.hover()
+#        print("hovering")
     
     drone_hover.set_yaw() # straight up yawing it
+    print(drone_hover.yaw_angle)
     print("yawing it")
     dist_change = main_directions.distance - 2
 #    drone = Mavlink(DRONE_PATH, 0, main_directions.yaw_angle, 0)
