@@ -5,10 +5,14 @@ import threading
 import time
 
 # Start web server
-threading.Thread(
-    target=start_server,
-    daemon=True
-).start()
+#threading.Thread(
+#    target=start_server,
+#    daemon=True
+#).start()
+
+#Start without demon
+server_thread = threading.Thread(target=start_server)
+server_thread.start()
 
 time.sleep(0.03)
 
