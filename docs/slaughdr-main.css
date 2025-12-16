@@ -2305,20 +2305,47 @@ html {
 	}
 
 	.full-width-center {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-family: var(--font-display);
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 700;
+		color: var(--light);
+		text-align: center;
+		margin-bottom: 50px;
+		position: relative;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
 	.centered-text {
 		max-width: 1800px;        /* controls line length */
 		width: 100%;
 		text-align: center;      /* center the text itself */
-		padding: 0 20px;         /* mobile safe */
+		padding: 0 20px; 
+		font-family: var(--font-display);
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 700;
+		color: var(--light);
+		text-align: center;
+		margin-bottom: 50px;
+		position: relative;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;        /* mobile safe */
 	}
 
 	.centered-text p {
 		text-align: left;        /* OPTIONAL: easier reading for long text */
+		font-family: var(--font-display);
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 700;
+		color: var(--light);
+		text-align: center;
+		margin-bottom: 50px;
+		position: relative;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 }
