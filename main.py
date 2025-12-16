@@ -111,7 +111,7 @@ while drone.autonomous == True:
 #    drone.approach_target_rc_override()
 #    if main_directions.distance < 1.5:
 #        drone_hover.set_mode("STABILIZE") # Goes back to loiter if it gets close to someone
-    asyncio.sleep(1)
+    asyncio.sleep(5)
 
 #Mission planner commands:
 #FLTMODE1 = STABILIZE -- RC controlled
