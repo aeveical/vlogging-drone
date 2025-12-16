@@ -42,6 +42,7 @@ new_alt = 0
 alt_acc = 0
 pitch = 0
 throttle = 0
+i = 0
 
 push_log(
     f"on"
@@ -73,31 +74,37 @@ while drone.autonomous == True:
     
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
     drone.yaw_angle = main_directions.yaw_angle
-    push_log(
-    f"yawing_it={drone.yaw_angle:.1f} "
-    #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
-    )
 #    drone_hover.wait_for_control()
 #    if (main_directions.height_change > 0) or (not main_directions.boxA): # If the drone is below
 #        #the target or doesnt see one, hover up to 2 meters
 #        drone_hover.start()
 #    else:
 #        drone_hover.hover()
-#        print("hovering")
-    yaw_pwm = 1500 + 20*drone.yaw_angle 
-
-    drone.yaw_override(yaw_pwm)
-    push_log(
-    f"yaw_sent={yaw_pwm:.1f} "
-    #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
-    )
-#    drone_hover.set_yaw() # straight up yawing it
+#        print("hovering"
+    yaw_pwm = 1500 + drone.yaw_angle 
+    yaw_deg = drone.yaw_angle/20
+    if i < 20:
+        drone.yaw_override(yaw_pwm)
+        push_log(
+            f"yaw_override={yaw_pwm:.1f} "
+        #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
+        )
+        i += 1
+    elif i < 40:
+        drone.un_yaw_override()
+        drone.set_yaw(yaw_deg) # straight up yawing it
+        push_log(
+            f"yaw_set={yaw_deg:.1f} "
+        #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
+        )
+        i += 1
+    else:
+        i = 0
 #    if abs(drone.yaw_angle > 5):
 #        drone.yaw_override()
 #        print(drone.yaw_angle)
 #        print("yawing it")
 #    else:
-#        drone.un_yaw_override()
     
     dist_change = main_directions.distance - 2
 #    drone = Mavlink(DRONE_PATH, 0, main_directions.yaw_angle, 0)

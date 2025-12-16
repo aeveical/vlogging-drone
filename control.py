@@ -107,15 +107,15 @@ class Control:
         self.takeoff(5)
         self.takeoff(2.0)
 
-    def set_yaw(self):
+    def set_yaw(self, yaw_deg):
         message = self.master.mav.command_long_encode(
             self.master.target_system,  # Target system ID
             self.master.target_component,  # Target component ID
             mavutil.mavlink.MAV_CMD_CONDITION_YAW,  # ID of command to send
             0,  # Confirmation
-            abs(self.yaw_angle), # Yaw angle
+            abs(yaw_deg), # Yaw angle
             30,       # yaw speed (set to default rn)
-            1 if self.yaw_angle >= 0 else -1, #CW (1) or CCW (-1)
+            1 if yaw_deg >= 0 else -1, #CW (1) or CCW (-1)
             1,       # choose relative yaw (0 = absolute)
             0,       # unused
             0,       # unused
