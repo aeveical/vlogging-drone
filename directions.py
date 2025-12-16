@@ -144,7 +144,7 @@ class Directions:
                         best_iou = score
                         best_box = det
 
-                if best_iou > 0.1:
+                if best_iou > 0.02:
                     # good match → same person
                     chosen = best_box
                     self.prev_box = best_box

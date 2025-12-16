@@ -4,13 +4,14 @@ from server import start_server, push_frame, push_log
 from flask import Flask
 import threading
 import time
+import asyncio
 
 app = Flask(__name__)
 # Start web server
-threading.Thread(
-    target=start_server,
-    daemon=True
-).start()
+#threading.Thread(
+#    target=start_server,
+#    daemon=True
+#).start()
 
 
 server_ready = threading.Event()
@@ -20,12 +21,12 @@ server_thread = threading.Thread(target=start_server)
 server_thread.start()
 
 print("Waiting for web server...")
-server_ready.wait()
+#server_ready.wait()
 print("Web server ready")
 
 server_ready.set()
 
-time.sleep(0.03)
+time.sleep(0.1)
 
 TARGET_ALT = 1  # meters
 autonomous = False
@@ -96,7 +97,7 @@ while drone.autonomous == True:
 #    drone.approach_target_rc_override()
 #    if main_directions.distance < 1.5:
 #        drone_hover.set_mode("STABILIZE") # Goes back to loiter if it gets close to someone
-    time.sleep(1)
+    asyncio.sleep(1)
 
 #Mission planner commands:
 #FLTMODE1 = STABILIZE -- RC controlled
