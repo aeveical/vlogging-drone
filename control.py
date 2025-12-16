@@ -123,9 +123,7 @@ class Control:
         )
         self.master.mav.send(message)
     
-    def yaw_override(self):
-        yaw_pwm = 1500 + 20*self.yaw_angle 
-
+    def yaw_override(self, yaw_pwm):
         self.master.mav.rc_channels_override_send(
             self.master.target_system,
             self.master.target_component,
