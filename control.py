@@ -1,7 +1,7 @@
 from pymavlink import mavutil
 import time
 
-class Hover:
+class Control:
 
     def __init__(self, serial, baud, yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous):
         self.serial = serial
@@ -19,8 +19,8 @@ class Hover:
         print("Master is")
         print(self.master)
         print("Syncing MAVLink...")
-        for _ in range(20):
-            self.master.recv_match(blocking=True, timeout=1)
+#        for _ in range(20):
+#            self.master.recv_match(blocking=True, timeout=1)
         msg = self.master.recv_match(blocking=True, timeout=5)
         print(msg)
 #        self.master.wait_heartbeat()
@@ -101,7 +101,7 @@ class Hover:
         )
 
     def start(self):
-        self.wait_heartbeat()
+        self.wait_for_heartbeat()
         self.arm()
         self.set_mode("ALT_HOLD")
         self.takeoff(5)
@@ -114,7 +114,7 @@ class Hover:
             mavutil.mavlink.MAV_CMD_CONDITION_YAW,  # ID of command to send
             0,  # Confirmation
             abs(self.yaw_angle), # Yaw angle
-            25,       # yaw speed (set to default rn)
+            30,       # yaw speed (set to default rn)
             1 if self.yaw_angle >= 0 else -1, #CW (1) or CCW (-1)
             1,       # choose relative yaw (0 = absolute)
             0,       # unused
@@ -122,9 +122,26 @@ class Hover:
             0        # unused
         )
         self.master.mav.send(message)
+    
+    def yaw_override(self):
+        yaw_pwm = 1500 + 10*self.yaw_angle 
+
+        self.master.mav.rc_channels_override_send(
+            self.master.target_system,
+            self.master.target_component,
+            0, 0, 0, yaw_pwm,  # ch1–ch4 (yaw is 4th)
+            0, 0, 0, 0
+        )
+
+    def un_yaw_override(self):
+        self.master.mav.rc_channels_override_send(
+            self.master.target_system,
+            self.master.target_component,
+            0, 0, 0, 0, 0, 0, 0, 0
+        )
 #        print(message)
-        ack = self.master.recv_match(type='COMMAND_ACK', blocking=True, timeout=2)
-        print("Yaw Accepcted", ack) # check if its accepted
+#        ack = self.master.recv_match(type='COMMAND_ACK', blocking=True, timeout=2)
+#        print("Yaw Accepcted", ack) # check if its accepted
     
     def approach(self): ## THIS IS HELLA SKETCH
         self.master.mav.rc_channels_override_send(
