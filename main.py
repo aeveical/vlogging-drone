@@ -20,12 +20,12 @@ server_thread = threading.Thread(target=start_server)
 server_thread.start()
 
 print("Waiting for web server...")
-server_ready.wait()
+#server_ready.wait()
 print("Web server ready")
 
 server_ready.set()
 
-time.sleep(0.03)
+time.sleep(0.1)
 
 TARGET_ALT = 1  # meters
 autonomous = False
