@@ -744,6 +744,13 @@ html {
 	margin-top: 30px;
 }
 
+/* Make linked info-boxes behave like blocks with no link styles */
+.info-link {
+	text-decoration: none;
+	color: inherit;
+	display: block;
+}
+
 .info-box {
 	position: relative;
 	padding: 30px;
