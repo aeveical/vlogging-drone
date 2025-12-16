@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2, time
 import numpy as np
 
-class directions:
+class Directions:
 
     ENGINE_IMGSZ = 640  # must match your TensorRT engine
     MODEL_PATH = "yolo11n.pt"
@@ -16,7 +16,7 @@ class directions:
     X_MAX = 3820 # screen width
     Y_MAX = 2464 # screen height
 
-    def __init__(self, yaw_angle, height_change, distance, boxA, boxB, cap, model, window_name):
+    def __init__(self, yaw_angle, height_change, distance, boxA, boxB, cap, model, window_name, prev_box):
         self.yaw_angle = yaw_angle
         self.height_change = height_change
         self.distance = distance
@@ -25,6 +25,7 @@ class directions:
         self.cap = cap
         self.model = model
         self.window_name = window_name
+        self.prev_box = None
 
 
     # Optional: if you prefer to assume an average person height, you can refine later using fx, but not required here.
@@ -40,7 +41,7 @@ class directions:
             "videoconvert ! video/x-raw, format=BGR ! "
             "appsink drop=1 max-buffers=1 sync=false"
         )
-        self.model = YOLO(directions.MODEL_PATH)
+        self.model = YOLO(Directions.MODEL_PATH)
         self.cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
         if not self.cap.isOpened():
             raise RuntimeError("Failed to open camera")
@@ -54,11 +55,11 @@ class directions:
             ok, f = self.cap.read()
             if not ok:
                 break
-            self.model.predict(f, imgsz=directions.ENGINE_IMGSZ, classes=[0], conf=0.4, iou=0.45, max_det=20, verbose=False)
+            self.model.predict(f, imgsz=Directions.ENGINE_IMGSZ, classes=[0], conf=0.4, iou=0.45, max_det=20, verbose=False)
 
     def estimate_distance_m(self, bbox_h_px: float, eps: float = 1e-6) -> float:
         # Z ≈ K / h_px where K = D0 * h0 from calibration
-        return float(directions.CALIB_K / max(bbox_h_px, eps))
+        return float(Directions.CALIB_K / max(bbox_h_px, eps))
 
     def iou(self, boxA, boxB):
         x1A, y1A, x2A, y2A = boxA
@@ -84,7 +85,6 @@ class directions:
     
     def get_directions(self):
         prev = time.time() # unused?
-        prev_box=None
         i = 0
         for i in range(10):
             ok, frame = self.cap.read()
@@ -93,7 +93,7 @@ class directions:
 
             results = self.model.predict(
                 frame,
-                imgsz=directions.ENGINE_IMGSZ,
+                imgsz=Directions.ENGINE_IMGSZ,
                 classes=[0],       # person only
                 conf=0.40,
                 iou=0.45,
@@ -126,19 +126,19 @@ class directions:
 
             chosen = None
 
-            if prev_box is None:
+            if self.prev_box is None:
                 # first frame → choose largest (closest) person
                 if len(detections) > 0:
                     detections.sort(key=lambda b: (b[2]-b[0])*(b[3]-b[1]), reverse=True)
                     chosen = detections[0]
-                    prev_box = chosen
+                    self.prev_box = chosen
             else:
                 # compute IOU vs previous frame box
                 best_iou = 0
                 best_box = None
 
                 for det in detections:
-                    score = self.iou(prev_box, det)
+                    score = self.iou(self.prev_box, det)
                     if score > best_iou:
                         best_iou = score
                         best_box = det
@@ -146,13 +146,13 @@ class directions:
                 if best_iou > 0.1:
                     # good match → same person
                     chosen = best_box
-                    prev_box = best_box
+                    self.prev_box = best_box
                 else:
                     # target lost → pick largest person
                     if len(detections) > 0:
                         detections.sort(key=lambda b: (b[2]-b[0])*(b[3]-b[1]), reverse=True)
                         chosen = detections[0]
-                        prev_box = chosen
+                        self.prev_box = chosen
 
             if chosen is not None:
                     x1,y1,x2,y2= chosen
@@ -161,8 +161,9 @@ class directions:
                     # center of bounding box for drone stuff
                     cx = (x1 + x2) // 2
                     cy = (y1 + y2) // 2
-
-                    self.yaw_angle = 1640 - cx # gets angle we need to yaw it
+                    h, w = frame.shape[:2]
+                    self.yaw_angle = (cx - (w / 2))
+#                    self.yaw_angle = (1640 - cx)/55 # gets angle we need to yaw it
                     self.height_change = cy*0.0015 - 2 # gets the height we want to go to, normalize hover at 2m
 
 
