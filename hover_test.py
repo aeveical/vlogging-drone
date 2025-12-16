@@ -19,8 +19,8 @@ class Hover:
         print("Master is")
         print(self.master)
         print("Syncing MAVLink...")
-        for _ in range(20):
-            self.master.recv_match(blocking=True, timeout=1)
+#        for _ in range(20):
+#            self.master.recv_match(blocking=True, timeout=1)
         msg = self.master.recv_match(blocking=True, timeout=5)
         print(msg)
 #        self.master.wait_heartbeat()
