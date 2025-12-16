@@ -2,12 +2,15 @@ from directions import Directions
 from control import Control
 from server import start_server, push_frame, push_log
 import threading
+import time
 
 # Start web server
 threading.Thread(
     target=start_server,
     daemon=True
 ).start()
+
+time.sleep(0.03)
 
 TARGET_ALT = 1  # meters
 autonomous = False
@@ -23,6 +26,11 @@ new_alt = 0
 alt_acc = 0
 pitch = 0
 throttle = 0
+
+push_log(
+    f"on"
+    #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
+    )
 
 print("Starting")
 drone = Control(DRONE_PATH, BAUD, 0, 0, 0, 0, 0, autonomous)
@@ -72,6 +80,7 @@ while drone.autonomous == True:
 #    drone.approach_target_rc_override()
 #    if main_directions.distance < 1.5:
 #        drone_hover.set_mode("STABILIZE") # Goes back to loiter if it gets close to someone
+    time.sleep(0.03)
 
 #Mission planner commands:
 #FLTMODE1 = STABILIZE -- RC controlled
