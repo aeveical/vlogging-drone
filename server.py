@@ -7,6 +7,9 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
+server_ready = threading.Event()
+shutdown_event = threading.Event()
+
 frame_q = queue.Queue(maxsize=2)
 
 HTML = """
@@ -62,7 +65,13 @@ def push_frame(frame_bgr):
 def push_log(line):
     socketio.emit("log", line)
 
+#def start_server():
+#    socketio.run(app, host="0.0.0.0", port=8000)
+
 def start_server():
-    socketio.run(app, host="0.0.0.0", port=8000)
-
-
+    try:
+        app.run(host="0.0.0.0", port=8000, threaded=True)
+    except Exception as e:
+        print("SERVER ERROR:", e)
+    finally:
+        shutdown_event.set()

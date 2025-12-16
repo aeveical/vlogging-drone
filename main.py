@@ -16,15 +16,6 @@ threading.Thread(
 server_ready = threading.Event()
 shutdown_event = threading.Event()
 
-
-def start_server():
-    try:
-        app.run(host="0.0.0.0", port=8000, threaded=True)
-    except Exception as e:
-        print("SERVER ERROR:", e)
-    finally:
-        shutdown_event.set()
-
 server_thread = threading.Thread(target=start_server)
 server_thread.start()
 
@@ -76,6 +67,7 @@ while drone.autonomous == True:
 
     push_frame(main_directions.frame)
     print(main_directions.frame is None)
+    yaw_pwm = 1500 + 20*main_directions.yaw_angle
 # Send logs (human readable + control-relevant)
     push_log(
     f"yawing_it={main_directions.yaw_angle:.1f} "
