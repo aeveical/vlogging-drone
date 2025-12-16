@@ -1245,23 +1245,11 @@ html {
 }
 
 .feature-card-3d:nth-child(2) {
-	transform: rotateY(60deg) translateZ(320px);
-}
-
-.feature-card-3d:nth-child(3) {
 	transform: rotateY(120deg) translateZ(320px);
 }
 
-.feature-card-3d:nth-child(4) {
-	transform: rotateY(180deg) translateZ(320px);
-}
-
-.feature-card-3d:nth-child(5) {
+.feature-card-3d:nth-child(3) {
 	transform: rotateY(240deg) translateZ(320px);
-}
-
-.feature-card-3d:nth-child(6) {
-	transform: rotateY(300deg) translateZ(320px);
 }
 
 .feature-card-3d:hover {
