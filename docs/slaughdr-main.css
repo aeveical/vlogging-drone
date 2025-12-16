@@ -2303,4 +2303,22 @@ html {
 		flex: 1;
 		min-width: 0;
 	}
+
+	.full-width-center {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	}
+
+	.centered-text {
+		max-width: 900px;        /* controls line length */
+		width: 100%;
+		text-align: center;      /* center the text itself */
+		padding: 0 20px;         /* mobile safe */
+	}
+
+	.centered-text p {
+		text-align: left;        /* OPTIONAL: easier reading for long text */
+	}
 }
