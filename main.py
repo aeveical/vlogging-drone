@@ -1,18 +1,38 @@
 from directions import Directions
 from control import Control
 from server import start_server, push_frame, push_log
+from flask import Flask
 import threading
 import time
 
+app = Flask(__name__)
 # Start web server
-#threading.Thread(
-#    target=start_server,
-#    daemon=True
-#).start()
+threading.Thread(
+    target=start_server,
+    daemon=True
+).start()
 
-#Start without demon
-server_thread = threading.Thread(target=start_server, daemon=False)
+
+server_ready = threading.Event()
+shutdown_event = threading.Event()
+
+
+def start_server():
+    try:
+        app.run(host="0.0.0.0", port=8000, threaded=True)
+    except Exception as e:
+        print("SERVER ERROR:", e)
+    finally:
+        shutdown_event.set()
+
+server_thread = threading.Thread(target=start_server)
 server_thread.start()
+
+print("Waiting for web server...")
+server_ready.wait()
+print("Web server ready")
+
+server_ready.set()
 
 time.sleep(0.03)
 
@@ -72,7 +92,7 @@ while drone.autonomous == True:
 #        print("hovering")
     
 #    drone_hover.set_yaw() # straight up yawing it
-    if abs(main_directions.yaw_angle > 5):
+    if abs(drone.yaw_angle > 5):
         drone.yaw_override()
         print(drone.yaw_angle)
         print("yawing it")
@@ -84,7 +104,7 @@ while drone.autonomous == True:
 #    drone.approach_target_rc_override()
 #    if main_directions.distance < 1.5:
 #        drone_hover.set_mode("STABILIZE") # Goes back to loiter if it gets close to someone
-    time.sleep(0.03)
+    time.sleep(1)
 
 #Mission planner commands:
 #FLTMODE1 = STABILIZE -- RC controlled
