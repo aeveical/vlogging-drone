@@ -7,10 +7,10 @@ import time
 
 app = Flask(__name__)
 # Start web server
-threading.Thread(
-    target=start_server,
-    daemon=True
-).start()
+#threading.Thread(
+#    target=start_server,
+#    daemon=True
+#).start()
 
 
 server_ready = threading.Event()
