@@ -45,7 +45,7 @@ while drone.autonomous == True:
     push_frame(main_directions.frame)
 # Send logs (human readable + control-relevant)
     push_log(
-    f"err_px={main_directions.yaw_angle:.1f} "
+    f"yawing_it={main_directions.yaw_angle:.1f} "
     #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
     )
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)

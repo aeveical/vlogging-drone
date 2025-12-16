@@ -1,7 +1,6 @@
 from ultralytics import YOLO
 import cv2, time
 import numpy as np
-from server import push_frame, push_log
 
 class Directions:
 
