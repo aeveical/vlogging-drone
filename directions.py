@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import cv2, time
 import numpy as np
+from server import push_frame, push_log
 
 class Directions:
 
@@ -16,7 +17,7 @@ class Directions:
     X_MAX = 3820 # screen width
     Y_MAX = 2464 # screen height
 
-    def __init__(self, yaw_angle, height_change, distance, boxA, boxB, cap, model, window_name, prev_box):
+    def __init__(self, yaw_angle, height_change, distance, boxA, boxB, cap, model, window_name, prev_box, frame):
         self.yaw_angle = yaw_angle
         self.height_change = height_change
         self.distance = distance
@@ -26,6 +27,7 @@ class Directions:
         self.model = model
         self.window_name = window_name
         self.prev_box = None
+        self.frame = frame
 
 
     # Optional: if you prefer to assume an average person height, you can refine later using fx, but not required here.
@@ -162,7 +164,8 @@ class Directions:
                     cx = (x1 + x2) // 2
                     cy = (y1 + y2) // 2
                     h, w = frame.shape[:2]
-                    self.yaw_angle = (cx - (w / 2))
+                    yaw_error = (cx - (w / 2))
+                    self.yaw_angle = yaw_error
 #                    self.yaw_angle = (1640 - cx)/55 # gets angle we need to yaw it
                     self.height_change = cy*0.0015 - 2 # gets the height we want to go to, normalize hover at 2m
 

@@ -1,7 +1,13 @@
 from directions import Directions
 from control import Control
-#from mavlink_test import Mavlink
-## MAIN
+from server import start_server, push_frame, push_log
+import threading
+
+# Start web server
+threading.Thread(
+    target=start_server,
+    daemon=True
+).start()
 
 TARGET_ALT = 1  # meters
 autonomous = False
@@ -25,7 +31,7 @@ drone.wait_for_heartbeat()
 print("Hearbeat Recieved")
 drone.wait_for_control_v2()
 print('waiting for control')
-main_directions = Directions(0, 0, 0, 3, 0, 0, 0, 0, None) # imports all the stats starting at 0
+main_directions = Directions(0, 0, 0, 3, 0, 0, 0, 0, None, None) # imports all the stats starting at 0
 print("initialized direction")
 print("Autonomous", drone.autonomous)
 autonomous = drone.autonomous
@@ -35,6 +41,13 @@ while drone.autonomous == True:
 #    main_directions = directions(main_directions.yaw_angle, main_directions.height_change, main_directions., 3, 0, 0, 0, 0) # imports all the stats starting at 0
 #    main_directions.start_cam()
     main_directions.get_directions()
+
+    push_frame(main_directions.frame)
+# Send logs (human readable + control-relevant)
+    push_log(
+    f"err_px={main_directions.yaw_angle:.1f} "
+    #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
+    )
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
     drone.yaw_angle = main_directions.yaw_angle
 #    drone_hover.wait_for_control()
