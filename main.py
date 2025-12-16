@@ -43,6 +43,7 @@ while drone.autonomous == True:
     main_directions.get_directions()
 
     push_frame(main_directions.frame)
+    print(main_directions.frame is None)
 # Send logs (human readable + control-relevant)
     push_log(
     f"yawing_it={main_directions.yaw_angle:.1f} "
