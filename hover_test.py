@@ -114,7 +114,7 @@ class Hover:
             mavutil.mavlink.MAV_CMD_CONDITION_YAW,  # ID of command to send
             0,  # Confirmation
             abs(self.yaw_angle), # Yaw angle
-            0,       # yaw speed (set to default rn)
+            25,       # yaw speed (set to default rn)
             1 if self.yaw_angle >= 0 else -1, #CW (1) or CCW (-1)
             1,       # choose relative yaw (0 = absolute)
             0,       # unused
@@ -122,7 +122,9 @@ class Hover:
             0        # unused
         )
         self.master.mav.send(message)
-        print(message)
+#        print(message)
+        ack = self.master.recv_match(type='COMMAND_ACK', blocking=True, timeout=2)
+        print("Yaw Accepcted", ack) # check if its accepted
     
     def approach(self): ## THIS IS HELLA SKETCH
         self.master.mav.rc_channels_override_send(

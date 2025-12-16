@@ -40,7 +40,7 @@ while drone_hover.autonomous == True:
 #    main_directions = directions(main_directions.yaw_angle, main_directions.height_change, main_directions., 3, 0, 0, 0, 0) # imports all the stats starting at 0
 #    main_directions.start_cam()
     main_directions.get_directions()
-    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
+    drone_hover = Hover(DRONE_PATH, BAUD, -main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
 #    drone_hover.wait_for_control()
 #    if (main_directions.height_change > 0) or (not main_directions.boxA): # If the drone is below
 #        #the target or doesnt see one, hover up to 2 meters
