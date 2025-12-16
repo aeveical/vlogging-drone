@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="slaughdr-main.css" rel="stylesheet">
+
+    <section class="content-section section-gradient" id="about">
+        <div class="container">
+            <h2 class="section-title">Electrical Design Decisions</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Vlog Anywhere</h3>
+                    <p>
+                        When designing, we started with chosen motors and electronic speed controllers (ESCs). These were relatively high-power systems, so choosing a powerful, lightweight battery would be our next step. Our battery was selected due to its low price tag and good power to weight ratio. As we aimed to implement rapid-refresh image processing, the Nvidia jetson orin nano super was the most logical choice for a microcontroller due to its high processing power and computer vision compatibility. Initially, we planned to use a much cheaper, less robust flight controller however we decided to go with the industry standard pixhawk to deal with the more complicated instructions. 
+                        Once we had decided on all of our components, the next step was deciding wiring routes. The pixhawk came with a power module designed to divert directly from the battery, so that was an easy first step. The rest of the power would need to go to a power distribution board, then diverted to the ESCs and the Jetson. The Jetson and Pixhawk have built-in systems to power their peripherals, so the camera and RC receiver were easy to implement.
+                        The entire system is powered by a 6s, 6000mah 22 volt lipo battery. A power module splits this into a stepped-down 5V line for the pixhawk flight controller and a 22V line into a power distribution board (PDB). Another buck converter off of the PDB powers the Nvidia Jetson at 5V. Four 22V lines extend from the PDB to each of the ESCs, which connect to the motors. The Jetson provides power for the camera and the pixhawk provides power for the antenna. A typical control cycle consists of the following steps:
+                        The Jetson reads the signal from the camera and runs computer vision to identify people
+                        The Jetson calculates where in frame the target is and converts it to control signals (pitch, yaw, roll and throttle) which are sent to the pixhawk via telemetry lines.
+                        The pixhawk determines the speed needed for each motor to run at that will result in the given directions being implemented and sends this via signal wires to the ESCs.
+                        The ESCs draw the appropriate current to provide each motor with the correct speed that results in the directions being achieved.
+                        The specific thrust from each motor causes the drone to fly/turn toward the target.
+                        Throughout this process, data from the camera is recorded to the SD card on the Nvidia Jetson. We can then watch this back on any screen with an SD input. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
