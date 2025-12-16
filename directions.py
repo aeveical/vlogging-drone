@@ -88,12 +88,12 @@ class Directions:
         prev = time.time() # unused?
         i = 0
         for i in range(10):
-            ok, frame = self.cap.read()
+            ok, self.frame = self.cap.read()
             if not ok:
                 break
 
             results = self.model.predict(
-                frame,
+                self.frame,
                 imgsz=Directions.ENGINE_IMGSZ,
                 classes=[0],       # person only
                 conf=0.40,
@@ -115,7 +115,7 @@ class Directions:
                     xyxy = xyxy.cpu(); confs = confs.cpu(); clss = clss.cpu()
                 xyxy = xyxy.numpy(); confs = confs.numpy(); clss = clss.numpy() # These errors are just a pylance thing
 
-                h, w = frame.shape[:2]
+                h, w = self.frame.shape[:2]
                 thick = max(1, int(round((h + w) / 600)))
 
                 for (x1, y1, x2, y2), c, cls in zip(xyxy, confs, clss):
@@ -158,11 +158,11 @@ class Directions:
             if chosen is not None:
                     x1,y1,x2,y2= chosen
                     # draw box
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 220, 0), thick)
+                    cv2.rectangle(self.frame, (x1, y1), (x2, y2), (0, 220, 0), thick)
                     # center of bounding box for drone stuff
                     cx = (x1 + x2) // 2
                     cy = (y1 + y2) // 2
-                    h, w = frame.shape[:2]
+                    h, w = self.frame.shape[:2]
                     yaw_error = (cx - (w / 2))/20
                     self.yaw_angle = int(yaw_error)
 #                    self.yaw_angle = (1640 - cx)/55 # gets angle we need to yaw it
@@ -172,23 +172,23 @@ class Directions:
 ## ---- for the jetson this is the last of the code we need but we'll keep the rest for testing --- ##
 
                     # draw a small circle at the center
-                    cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+                    cv2.circle(self.frame, (cx, cy), 4, (0, 0, 255), -1)
 
                     # label: confidence + distance
                     label = f"person {c:.2f} | {Z_m:.2f} m"
                     # background for readability
                     (tw, th), bl = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.55, max(1, thick-1))
-                    cv2.rectangle(frame, (x1, max(y1 - th - 8, 0)), (x1 + tw + 4, y1), (0, 220, 0), -1)
-                    cv2.putText(frame, label, (x1 + 2, max(y1 - 5, 0)),
+                    cv2.rectangle(self.frame, (x1, max(y1 - th - 8, 0)), (x1 + tw + 4, y1), (0, 220, 0), -1)
+                    cv2.putText(self.frame, label, (x1 + 2, max(y1 - 5, 0)),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), max(1, thick-1), cv2.LINE_AA)
             # FPS overlay
             now = time.time()
             fps = 1.0 / (now - prev) if now > prev else 0.0
             prev = now
-            cv2.putText(frame, f"FPS: {fps:.1f}", (8, 24),
+            cv2.putText(self.frame, f"FPS: {fps:.1f}", (8, 24),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
 
-            cv2.imshow(self.window_name, frame)
+            cv2.imshow(self.window_name, self.frame)
             k = cv2.waitKey(1) & 0xFF
             if k == ord('q') or k == 27:
                 break
