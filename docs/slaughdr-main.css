@@ -1241,15 +1241,31 @@ html {
 }
 
 .feature-card-3d:nth-child(1) {
-	transform: rotateY(0deg) translateZ(320px);
+	transform: rotateY(0deg) translateZ(420px);
+	opacity: 1;
+	z-index: 3;
 }
 
 .feature-card-3d:nth-child(2) {
-	transform: rotateY(120deg) translateZ(320px);
+	transform: rotateY(120deg) translateZ(220px) rotateY(18deg);
+	opacity: 0.65;
+	z-index: 2;
 }
 
 .feature-card-3d:nth-child(3) {
-	transform: rotateY(240deg) translateZ(320px);
+	transform: rotateY(240deg) translateZ(220px) rotateY(-18deg);
+	opacity: 0.65;
+	z-index: 2;
+}
+
+.feature-card-3d {
+	transition: transform 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, box-shadow 0.3s ease;
+}
+
+.feature-card-3d:hover {
+	transform: translateZ(480px) rotateY(0deg) !important;
+	opacity: 1 !important;
+	z-index: 4 !important;
 }
 
 .feature-card-3d:hover {
