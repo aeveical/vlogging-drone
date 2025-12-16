@@ -744,21 +744,6 @@ html {
 	margin-top: 30px;
 }
 
-/* Left side container for About section (centers the info-box) */
-.about-side {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 10px;
-}
-
-/* Make linked info-boxes behave like blocks with no link styles */
-.info-link {
-	text-decoration: none;
-	color: inherit;
-	display: block;
-}
-
 .info-box {
 	position: relative;
 	padding: 30px;
@@ -1241,31 +1226,27 @@ html {
 }
 
 .feature-card-3d:nth-child(1) {
-	transform: rotateY(0deg) translateZ(420px);
-	opacity: 1;
-	z-index: 3;
+	transform: rotateY(0deg) translateZ(320px);
 }
 
 .feature-card-3d:nth-child(2) {
-	transform: rotateY(120deg) translateZ(220px) rotateY(18deg);
-	opacity: 0.65;
-	z-index: 2;
+	transform: rotateY(60deg) translateZ(320px);
 }
 
 .feature-card-3d:nth-child(3) {
-	transform: rotateY(240deg) translateZ(220px) rotateY(-18deg);
-	opacity: 0.65;
-	z-index: 2;
+	transform: rotateY(120deg) translateZ(320px);
 }
 
-.feature-card-3d {
-	transition: transform 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, box-shadow 0.3s ease;
+.feature-card-3d:nth-child(4) {
+	transform: rotateY(180deg) translateZ(320px);
 }
 
-.feature-card-3d:hover {
-	transform: translateZ(480px) rotateY(0deg) !important;
-	opacity: 1 !important;
-	z-index: 4 !important;
+.feature-card-3d:nth-child(5) {
+	transform: rotateY(240deg) translateZ(320px);
+}
+
+.feature-card-3d:nth-child(6) {
+	transform: rotateY(300deg) translateZ(320px);
 }
 
 .feature-card-3d:hover {
