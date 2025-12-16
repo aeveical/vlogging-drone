@@ -128,7 +128,7 @@ function updateIndicators() {
 // Go to specific slide
 function goToSlide(index) {
    currentIndex = index;
-   currentRotation = -index * 60;
+   currentRotation = -index * 120;
    updateView();
 }
 
