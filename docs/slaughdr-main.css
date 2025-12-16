@@ -744,6 +744,14 @@ html {
 	margin-top: 30px;
 }
 
+/* Left side container for About section (centers the info-box) */
+.about-side {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
 /* Make linked info-boxes behave like blocks with no link styles */
 .info-link {
 	text-decoration: none;

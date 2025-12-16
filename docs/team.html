@@ -7,8 +7,55 @@
     <link href="slaughdr-main.css" rel="stylesheet">
     <style>
         .team-page { padding: 80px 5%; min-height: 100vh; background: #0a0a0f; color: #fff; }
-        .team-card { max-width: 900px; margin: 0 auto; background: rgba(255,255,255,0.03); padding: 36px; border-radius: 12px; }
+        .team-card { max-width: 1200px; margin: 0 auto; background: rgba(255,255,255,0.03); padding: 36px; border-radius: 12px; }
         .back-link { display:inline-block; margin-top:20px; color: #fff; text-decoration: none; }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.02);
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+        }
+
+        .member-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .member-bio {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        @media (max-width: 520px) {
+            .member-photo { height: 140px; }
+        }
     </style>
 </head>
 <body>
@@ -16,14 +63,39 @@
         <div class="team-card">
             <h1 class="section-title">About The Team</h1>
             <p>We are a small team of engineers and creators building SLAUGHDR — a compact vlogging drone powered by a Jetson-class compute module.</p>
-            <h3>Core Members</h3>
-            <ul>
-                <li><strong>Jonathan Sun</strong> — Mechanical engineer</li>
-                <li><strong>Liam Fries</strong> — Electrical Engineer</li>
-                <li><strong>Trinity Haisch</strong> — Mechanical Engineer</li>
-                <li><strong>Althea Ivins</strong> — Electrical Engineer</li>
-                <li><strong>Matthew Kwon</strong> — Mechanical Engineer</li>
-            </ul>
+
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-photo" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop');"></div>
+                    <h4 class="member-name">Jonathan Sun</h4>
+                    <p class="member-bio">Mechanical engineer focused on frame design, durability testing, and vibration isolation. Loves CAD and rapid prototyping.</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-photo" style="background-image: url('https://images.unsplash.com/photo-1545996124-1f7d3d9f0b7f?w=400&h=400&fit=crop');"></div>
+                    <h4 class="member-name">Liam Fries</h4>
+                    <p class="member-bio">Electrical engineer working on power distribution, battery management, and motor controllers. Enjoys optimizing for flight time.</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-photo" style="background-image: url('https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=400&h=400&fit=crop');"></div>
+                    <h4 class="member-name">Trinity Haisch</h4>
+                    <p class="member-bio">Mechanical engineer specializing in mounts, gimbals, and payload integration. Passionate about lightweight design.</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-photo" style="background-image: url('https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=400&h=400&fit=crop');"></div>
+                    <h4 class="member-name">Althea Ivins</h4>
+                    <p class="member-bio">Electrical systems lead working on sensors, telemetry, and safety interlocks. Focused on reliability and resilience.</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-photo" style="background-image: url('https://images.unsplash.com/photo-1546456073-6712f79251bb?w=400&h=400&fit=crop');"></div>
+                    <h4 class="member-name">Matthew Kwon</h4>
+                    <p class="member-bio">Mechanical engineer and fabricator. Handles assembly workflows and field testing, and documents builds for reproducibility.</p>
+                </div>
+            </div>
+
             <a class="back-link" href="index.html">← Back to Home</a>
         </div>
     </div>
