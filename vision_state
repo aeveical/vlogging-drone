@@ -1,0 +1,9 @@
+import threading
+import time
+
+class VisionState:
+    def __init__(self):
+        self.lock = threading.Lock()
+        self.yaw_angle = 0.0
+        self.frame = None
+        self.timestamp = 0.0
