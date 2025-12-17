@@ -86,6 +86,7 @@ while drone.autonomous == True:
     print(yaw_pwm)
     print(yaw_deg)
     if i < 100:
+        print(i)
         yaw_pwm = max(1000, min(2000, yaw_pwm))
         drone.yaw_override(yaw_pwm) # CECK RC_MAP_YAW
 
