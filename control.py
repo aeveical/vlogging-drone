@@ -144,13 +144,17 @@ class Control:
 #        ack = self.master.recv_match(type='COMMAND_ACK', blocking=True, timeout=2)
 #        print("Yaw Accepcted", ack) # check if its accepted
     
-    def approach(self): ## THIS IS HELLA SKETCH
+    def pitch_yaw_override(self, yaw_pwm, pitch):
+        if abs(pitch - 1500) < 50:
+            pitch_pwm = pitch
+        else: 
+            pitch_pwm = 0
         self.master.mav.rc_channels_override_send(
             self.master.target_system,
             self.master.target_component,
-            0, self.pitch, self.throttle, self.yaw_angle, 
-            0, 0, 0, 0         
-        )
+            0, pitch_pwm, 0, yaw_pwm,  # ch1–ch4 (yaw is 4th)
+            0, 0, 0, 0
+        ) 
 
     def change_alt(self):
         message  = self.master.mav.command_long_encode(
@@ -172,14 +176,13 @@ class Control:
     def wait_for_control(self):
         while self.autonomous == False:
             msg = self.master.recv_match(blocking=True, timeout=5)
-            print(self.autonomous)
 
 #            if msg.get_type() == 'HEARTBEAT'
             if msg:
                 print(msg)
                 mode = mavutil.mode_string_v10(msg)
                 print(f"Flight mode: {mode}")
-                if mode == "GUIDED_NOGPS":
+                if (mode == "ALT_HOLD") or (mode == "GUIDED_NOGPS"):
                     self.autonomous = True
 
     def wait_for_control_v2(self):
@@ -204,3 +207,16 @@ class Control:
 
             if mode == "ALT_HOLD":
                 self.autonomous = True
+
+    def wait_for_rc_v2(self):
+
+        # ENSURE parser is synced
+        self.master.wait_heartbeat()
+
+        msg = self.master.recv_match(blocking=True, timeout=3)
+
+        mode = mavutil.mode_string_v10(msg)
+        print("Mode:", mode)
+
+        if mode == "STABILIZE":
+            self.autonomous = True
