@@ -66,12 +66,16 @@ while drone.autonomous == True:
 #    main_directions = directions(main_directions.yaw_angle, main_directions.height_change, main_directions., 3, 0, 0, 0, 0) # imports all the stats starting at 0
 #    main_directions.start_cam()
     main_directions.get_directions()
-
+    print(main_directions.frame is None)
     push_frame(main_directions.frame)
     yaw_pwm = 1500 + 0.2*main_directions.yaw_angle
     
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
     drone.yaw_angle = main_directions.yaw_angle
+    push_log(
+        f"yaw_override={yaw_pwm:.1f} "
+    #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
+    )
 #    drone_hover.wait_for_control()
 #    if (main_directions.height_change > 0) or (not main_directions.boxA): # If the drone is below
 #        #the target or doesnt see one, hover up to 2 meters
@@ -88,9 +92,4 @@ while drone.autonomous == True:
     yaw_pwm = max(1200, min(1800, yaw_pwm))
     drone.yaw_override(yaw_pwm) # CECK RC_MAP_YAW
 
-    push_log(
-        f"yaw_override={yaw_pwm:.1f} "
-    #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
-    )
-    i += 1
     time.sleep(0.05)
