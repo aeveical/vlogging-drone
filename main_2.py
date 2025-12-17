@@ -68,7 +68,7 @@ while drone.autonomous == True:
     main_directions.get_directions()
 
     push_frame(main_directions.frame)
-    yaw_pwm = 1500 + 0.1*main_directions.yaw_angle
+    yaw_pwm = 1500 + 0.2*main_directions.yaw_angle
     
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
     drone.yaw_angle = main_directions.yaw_angle
