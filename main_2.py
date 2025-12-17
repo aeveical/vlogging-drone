@@ -80,16 +80,15 @@ while drone.autonomous == True:
 #    else:
 #        drone_hover.hover()
 #        print("hovering"
-    yaw_pwm = 1500 + drone.yaw_angle 
+#    yaw_pwm = 1500 + drone.yaw_angle 
     yaw_deg = drone.yaw_angle/20
-    if i < 20:
+    print(yaw_pwm)
+    print(yaw_deg)
+    for i in range(20):
         drone.yaw_override(yaw_pwm) # CECK RC_MAP_YAW
 
         push_log(
             f"yaw_override={yaw_pwm:.1f} "
         #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
         )
-        i += 1
         time.sleep(0.1)
-    else:
-        i = 0
