@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import cv2, time
 import numpy as np
+import os
 
 class Directions:
 
@@ -49,7 +50,9 @@ class Directions:
 
         cv2.setUseOptimized(True)
         self.window_name = "People + Distance (YOLO11n TRT)"
-        cv2.namedWindow(self.window_name, cv2.WINDOW_AUTOSIZE)
+        self.show_ui = bool(os.environ.get("DISPLAY"))
+        if self.show_ui:
+            cv2.namedWindow(self.window_name, cv2.WINDOW_AUTOSIZE)
 
         # Warmup
         for _ in range(3):
@@ -187,8 +190,9 @@ class Directions:
             prev = now
             cv2.putText(self.frame, f"FPS: {fps:.1f}", (8, 24),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
-
-            cv2.imshow(self.window_name, self.frame)
+            if self.show_ui:
+                cv2.imshow(self.window_name, self.frame)
+                cv2.waitKey(1)
             k = cv2.waitKey(1) & 0xFF
             if k == ord('q') or k == 27:
                 break
