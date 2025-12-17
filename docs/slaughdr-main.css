@@ -40,6 +40,10 @@ html {
 	scroll-behavior: smooth;
 }
 
+.center-text {
+	text-align: center;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
 	width: 8px;
@@ -2028,7 +2032,11 @@ html {
     z-index: 2;
 }
 
-
+.feature-card-3d:nth-child(4) {
+    transform: rotateY(-120deg) translateZ(320px);
+    opacity: 0.7;
+    z-index: 2;
+}
 
 	.feature-title-3d {
 		font-size: 0.85rem;
