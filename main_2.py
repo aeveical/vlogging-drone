@@ -68,7 +68,7 @@ while drone.autonomous == True:
     main_directions.get_directions()
 
     push_frame(main_directions.frame)
-    yaw_pwm = 1500 + main_directions.yaw_angle
+    yaw_pwm = 1500 + 0.1*main_directions.yaw_angle
     
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
     drone.yaw_angle = main_directions.yaw_angle
@@ -85,7 +85,7 @@ while drone.autonomous == True:
     print(yaw_pwm)
     print(yaw_deg)
     print(i)
-    yaw_pwm = max(1000, min(2000, yaw_pwm))
+    yaw_pwm = max(1200, min(1800, yaw_pwm))
     drone.yaw_override(yaw_pwm) # CECK RC_MAP_YAW
 
     push_log(
