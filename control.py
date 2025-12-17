@@ -1,5 +1,6 @@
 from pymavlink import mavutil
 import time
+import asyncio
 
 class Control:
 
@@ -107,31 +108,31 @@ class Control:
         self.takeoff(5)
         self.takeoff(2.0)
 
-    def set_yaw(self):
+    async def set_yaw(self, yaw_deg):
         message = self.master.mav.command_long_encode(
             self.master.target_system,  # Target system ID
             self.master.target_component,  # Target component ID
             mavutil.mavlink.MAV_CMD_CONDITION_YAW,  # ID of command to send
             0,  # Confirmation
-            abs(self.yaw_angle), # Yaw angle
+            abs(yaw_deg), # Yaw angle
             30,       # yaw speed (set to default rn)
-            1 if self.yaw_angle >= 0 else -1, #CW (1) or CCW (-1)
+            1 if yaw_deg >= 0 else -1, #CW (1) or CCW (-1)
             1,       # choose relative yaw (0 = absolute)
             0,       # unused
             0,       # unused
             0        # unused
         )
         self.master.mav.send(message)
-    
-    def yaw_override(self):
-        yaw_pwm = 1500 + 20*self.yaw_angle 
+        await asyncio.sleep(2)
 
+    
+    def yaw_override(self, yaw_pwm):
         self.master.mav.rc_channels_override_send(
             self.master.target_system,
             self.master.target_component,
             0, 0, 0, yaw_pwm,  # ch1–ch4 (yaw is 4th)
             0, 0, 0, 0
-        )
+        ) 
 
     def un_yaw_override(self):
         self.master.mav.rc_channels_override_send(

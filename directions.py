@@ -163,7 +163,7 @@ class Directions:
                     cx = (x1 + x2) // 2
                     cy = (y1 + y2) // 2
                     h, w = self.frame.shape[:2]
-                    yaw_error = (cx - (w / 2))/20
+                    yaw_error = (cx - (w / 2))
                     self.yaw_angle = int(yaw_error)
 #                    self.yaw_angle = (1640 - cx)/55 # gets angle we need to yaw it
                     self.height_change = cy*0.0015 - 2 # gets the height we want to go to, normalize hover at 2m

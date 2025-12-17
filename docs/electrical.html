@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electrical Design</title>
+    <title>Mechanical Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="slaughdr-main.css" rel="stylesheet">
+    <style>
+    .title-font {
+        font-family: var(--font-heading);
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.8;
+        text-align: center;
+        font-weight: 400;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+    }
+    
+    </style>
 </head>
 <body>
     <section class="content-section section-gradient" id="about">
-        <div class="container">
-            <h2 class="section-title">Electrical Design Decisions</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Vlog Anywhere</h3>
-                    <p>
+        <div class="full-width-center">
+            <h2 class="section-title">Software Design Decisions</h2>
+            <div class="centered-text">
+                
+                <div class="title-font">
                         When designing, we started with chosen motors and electronic speed controllers (ESCs). These were relatively high-power systems, so choosing a powerful, lightweight battery would be our next step. Our battery was selected due to its low price tag and good power to weight ratio. As we aimed to implement rapid-refresh image processing, the Nvidia jetson orin nano super was the most logical choice for a microcontroller due to its high processing power and computer vision compatibility. Initially, we planned to use a much cheaper, less robust flight controller however we decided to go with the industry standard pixhawk to deal with the more complicated instructions. 
                         Once we had decided on all of our components, the next step was deciding wiring routes. The pixhawk came with a power module designed to divert directly from the battery, so that was an easy first step. The rest of the power would need to go to a power distribution board, then diverted to the ESCs and the Jetson. The Jetson and Pixhawk have built-in systems to power their peripherals, so the camera and RC receiver were easy to implement.
                         The entire system is powered by a 6s, 6000mah 22 volt lipo battery. A power module splits this into a stepped-down 5V line for the pixhawk flight controller and a 22V line into a power distribution board (PDB). Another buck converter off of the PDB powers the Nvidia Jetson at 5V. Four 22V lines extend from the PDB to each of the ESCs, which connect to the motors. The Jetson provides power for the camera and the pixhawk provides power for the antenna. A typical control cycle consists of the following steps:
@@ -26,11 +37,9 @@
                         The ESCs draw the appropriate current to provide each motor with the correct speed that results in the directions being achieved.
                         The specific thrust from each motor causes the drone to fly/turn toward the target.
                         Throughout this process, data from the camera is recorded to the SD card on the Nvidia Jetson. We can then watch this back on any screen with an SD input. 
-                    </p>
                 </div>
             </div>
         </div>
     </section>
-
 </body>
 </html>
