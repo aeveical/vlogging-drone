@@ -85,7 +85,8 @@ while drone.autonomous == True:
     print("yaw_pwn")
     print(yaw_pwm)
     print(yaw_deg)
-    if i < 20:
+    if i < 100:
+        yaw_pwm = max(1000, min(2000, yaw_pwm))
         drone.yaw_override(yaw_pwm) # CECK RC_MAP_YAW
 
         push_log(
@@ -93,6 +94,6 @@ while drone.autonomous == True:
         #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
         )
         i += 1
-        time.sleep(0.1)
+        time.sleep(0.05)
     else:
         i = 0
