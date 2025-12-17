@@ -1,5 +1,6 @@
 from directions import Directions
 from control import Control
+#from vision_state import VisionState
 from server import start_server, push_frame, push_log
 from flask import Flask
 import threading
@@ -13,16 +14,13 @@ app = Flask(__name__)
 #    daemon=True
 #).start()
 
-
 server_ready = threading.Event()
 shutdown_event = threading.Event()
 
 server_thread = threading.Thread(target=start_server)
 server_thread.start()
 
-print("Waiting for web server...")
 #server_ready.wait()
-print("Web server ready")
 
 server_ready.set()
 
@@ -49,24 +47,16 @@ push_log(
     #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
     )
 
-print("Starting")
 drone = Control(DRONE_PATH, BAUD, 0, 0, 0, 0, 0, autonomous)
-print('hover initialized')
 drone.wait_for_heartbeat()
-print("Hearbeat Recieved")
 drone.wait_for_control_v2()
-print('waiting for control')
 main_directions = Directions(0, 0, 0, 3, 0, 0, 0, 0, None, None) # imports all the stats starting at 0
-print("initialized direction")
-print("Autonomous", drone.autonomous)
 autonomous = drone.autonomous
 main_directions.start_cam()
 while drone.autonomous == True:
-    print('autonomous')
 #    main_directions = directions(main_directions.yaw_angle, main_directions.height_change, main_directions., 3, 0, 0, 0, 0) # imports all the stats starting at 0
 #    main_directions.start_cam()
     main_directions.get_directions()
-    print(main_directions.frame is None)
     push_frame(main_directions.frame)
     yaw_pwm = 1500 + 0.2*main_directions.yaw_angle
     
@@ -85,10 +75,6 @@ while drone.autonomous == True:
 #        print("hovering"
 #    yaw_pwm = 1500 + drone.yaw_angle 
     yaw_deg = drone.yaw_angle/20
-    print("yaw_pwn")
-    print(yaw_pwm)
-    print(yaw_deg)
-    print(i)
     yaw_pwm = int(max(1200, min(1800, yaw_pwm)))
     drone.yaw_override(yaw_pwm) # CECK RC_MAP_YAW
 
