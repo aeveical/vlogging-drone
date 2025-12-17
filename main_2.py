@@ -70,7 +70,6 @@ while drone.autonomous == True:
     push_frame(main_directions.frame)
     print(main_directions.frame is None)
     yaw_pwm = 1500 + 20*main_directions.yaw_angle
-# Send logs (human readable + control-relevant)
     
 #    drone_hover = Hover(DRONE_PATH, BAUD, main_directions.yaw_angle, new_alt, alt_acc, pitch, throttle, autonomous)
     drone.yaw_angle = main_directions.yaw_angle
@@ -91,31 +90,6 @@ while drone.autonomous == True:
         #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
         )
         i += 1
-    elif i < 40:
-        drone.un_yaw_override()
-#        drone.set_yaw(yaw_deg) # straight up yawing it
-        push_log(
-            f"yaw_set={yaw_deg:.1f} "
-        #f"Z={Z_m:.2f}m FPS={fps:.1f}\n"
-        )
-        i += 1
+        time.sleep(0.1)
     else:
         i = 0
-#    if abs(drone.yaw_angle > 5):
-#        drone.yaw_override()
-#        print(drone.yaw_angle)
-#        print("yawing it")
-#    else:
-#    drone = Mavlink(DRONE_PATH, 0, main_directions.yaw_angle, 0)
-#    drone.approach_target_rc_override()
-#    if main_directions.distance < 1.5:
-#        drone_hover.set_mode("STABILIZE") # Goes back to loiter if it gets close to someone
-#    asyncio.sleep(5)
-
-#Mission planner commands:
-#FLTMODE1 = STABILIZE -- RC controlled
-#FLTMODE2 = LOITER -- just gonna chill there
-#FLTMODE3 = GUIDED -- Jetson Control
-
-
-#VISION_SPEED_ESTIMATE (103) LOOK INTO THIS

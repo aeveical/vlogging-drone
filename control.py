@@ -1,5 +1,6 @@
 from pymavlink import mavutil
 import time
+import asyncio
 
 class Control:
 
@@ -107,7 +108,7 @@ class Control:
         self.takeoff(5)
         self.takeoff(2.0)
 
-    def set_yaw(self, yaw_deg):
+    async def set_yaw(self, yaw_deg):
         message = self.master.mav.command_long_encode(
             self.master.target_system,  # Target system ID
             self.master.target_component,  # Target component ID
@@ -122,6 +123,8 @@ class Control:
             0        # unused
         )
         self.master.mav.send(message)
+        await asyncio.sleep(2)
+
     
     def yaw_override(self, yaw_pwm):
         self.master.mav.rc_channels_override_send(
@@ -129,7 +132,7 @@ class Control:
             self.master.target_component,
             0, 0, 0, yaw_pwm,  # ch1–ch4 (yaw is 4th)
             0, 0, 0, 0
-        )
+        ) 
 
     def un_yaw_override(self):
         self.master.mav.rc_channels_override_send(
