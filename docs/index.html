@@ -36,26 +36,6 @@ Free HTML CSS Template
         <!-- Background Layer -->
         <div class="parallax-layer layer-bg"></div>
         
-        <!-- Floating Elements Layer -->
-        <div class="parallax-layer layer-float">
-            <!-- Bottom Left Rectangle Group -->
-            <div class="rectangles-bottom-left">
-                <div class="rect rect-bl-1"></div>
-                <div class="rect rect-bl-2"></div>
-                <div class="rect rect-bl-3"></div>
-                <div class="rect rect-bl-4"></div>
-                <div class="rect rect-bl-5"></div>
-                <div class="rect rect-bl-6"></div>
-            </div>
-            
-            <!-- Top Right Rectangle Group -->
-            <div class="rectangles-top-right">
-                <div class="rect rect-tr-1"></div>
-                <div class="rect rect-tr-2"></div>
-                <div class="rect rect-tr-3"></div>
-                <div class="rect rect-tr-4"></div>
-            </div>
-        </div>
         
         <!-- Foreground Layer -->
         <div class="parallax-layer layer-fg">
@@ -68,31 +48,83 @@ Free HTML CSS Template
             <h1 class="hero-title">SLAUGHDR</h1>
             <p class="hero-subtitle">The Ultimate Vlogging Drone</p>
             <a href="#about" class="cta-button">Our Process</a>
-            <a href="test-model.html" class="cta-button">Another Button</a>
+            <!-- <a href="test-model.html" class="cta-button">Animation</a> -->
         </div>
     </div>
 
     <!-- About Section -->
     <section class="content-section section-gradient" id="about">
         <div class="container">
-            <h2 class="section-title">About The Vlogging Drone</h2>
-            <div class="about-content">
-                <div class="about-side">
-                    <a href="team.html" class="feature-link">
-                        <div class="info-box">
-                            <div class="box-icon">
-                                🤝             
-                            </div>
-                            <h4 class="box-title">About the Team</h4>
-                            <p class="box-description">Learn about the people behind the SLAUGHDR</p>
-                        </div>
-                    </a>
-                </div>
+            <h2 class="section-title">About Our Project</h2>
                 <div class="about-text">
                     <h3>Vlog Anywhere</h3>
-                    <p>Our vlogging drone is designed to be a hands off and easy to use. Powered by a 22.2V battery and controlled by a nvidia Jetson, you can use this drone in a variety of enviornments. Try it today.</p>
+                    <p>A Serialized, Lightweight, Arial Unit Generating High Definition Recording, our vlogging drone is designed to be hands off and easy to use. Powered by a 22.2V battery and controlled by a Nvidia Jetson, you can use this drone to record in a variety of enviornments. Try it today.</p>
                 </div>
-            </div>
+
+        <div class="container">
+                <div class="about-text">
+                    <h3>Drone in Action</h3>
+                </div>
+        
+                <div class="video-gallery">
+
+        <div class="cell">
+            <video src="assets/drone_falls.mov" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Second motor test. The motors were spinning at inconsistent power. This was a reoccuring problem.</div>
+        </div>
+
+        <div class="cell">
+            <video src="assets/motors_spin.MOV" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">First motor spinning test.</div>
+        </div>
+
+        <div class="cell">
+            <video src="assets/first_all_motor_test.mov" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Testing all four motors with propellors for the first time.</div>
+        </div>
+
+        <div class="cell">
+            <video src="assets/facial_detecting_test.MOV" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Computer vision limit testing.</div>
+        </div>
+        
+        <div class="cell">
+            <video src="assets/drone_flying_1.mp4" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">The drone being controlled by the flight controller only.</div>
+        </div>
+
+        <div class="cell vertical">
+            <video src="assets/logan_drone_catch.mp4" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Logan Teeple, our #1 savior.</div>
+        </div>
+
+        <div class="cell">
+            <video src="assets/jonathan_full_working_drone_pov_3.mp4" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Hosted on our web server, we can have live feed to see the drone's POV.</div>
+        </div>
+
+        <div class="cell">
+            <video src="assets/jonathan_full_working_drone_pov1.mp4" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Drone will spin (yaw) to keep user in frame.</div>
+        </div>
+
+        <div class="cell vertical">
+            <video src="assets/jonathan_full_working_drone_pov2.MOV" autoplay loop muted playsinline disablePictureInPicture></video>
+            <div class="overlay">Jonathan's POV of the drone yawing (turning to face him).</div>
+        </div>
+
+    </div>
+
+    <script>
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                cell.classList.toggle('expanded');
+                // Optional: close others when one opens
+                cells.forEach(c => { if(c !== cell) c.classList.remove('expanded'); });
+            });
+        });
+    </script>
         </div>
     </section>
 
@@ -105,10 +137,20 @@ Free HTML CSS Template
         </div>
         
         <div class="container">
-            <h2 class="section-title">System Breakdowns</h2>
+            <h2 class="section-title">Explore</h2>
             <div class="features-container">
                 <div class="carousel-3d" id="carousel">
-                     <div class="feature-card-3d" data-index="0">
+                    <div class="feature-card-3d" data-index="0">
+                        <a href="model.html" class="feature-link">
+                        <span class="feature-number">00</span>
+                        <div class="feature-icon-3d">👀</div>
+                        <h3 class="feature-title-3d">Close Up</h3>
+                        <p class="feature-description-3d">Explore our drone's features in detail with an interactive CAD.</p>
+                        <div class="center">
+                        </a>
+                        </div>
+                    </div>
+                     <div class="feature-card-3d" data-index="1">
                         <a href="system.html" class="feature-link">
                         <span class="feature-number">01</span>
                         <div class="feature-icon-3d">⚙️</div>
@@ -118,7 +160,7 @@ Free HTML CSS Template
                         </a>
                         </div>
                     </div>
-                    <div class="feature-card-3d" data-index="1">
+                    <div class="feature-card-3d" data-index="2">
                         <a href="mechanical.html" class="feature-link">
                         <span class="feature-number">02</span>
                         <div class="feature-icon-3d">🔧</div>
@@ -129,7 +171,7 @@ Free HTML CSS Template
                         </div>
                     </div>
                 
-                    <div class="feature-card-3d" data-index="2">
+                    <div class="feature-card-3d" data-index="3">
                         <a href="electrical.html" class="feature-link">
                         <span class="feature-number">03</span>
                         <div class="feature-icon-3d">🔋</div>
@@ -137,8 +179,8 @@ Free HTML CSS Template
                         <p class="feature-description-3d">Read more about the electrical system and power supply</p>
                     </a>
                     </div>
-                    <div class="feature-card-3d" data-index="3">
-                        <a href="softeware.html" class="feature-link">
+                    <div class="feature-card-3d" data-index="4">
+                        <a href="software.html" class="feature-link">
                         <span class="feature-number">04</span>
                         <div class="feature-icon-3d">💻</div>
                         <h3 class="feature-title-3d">Software</h3>
@@ -153,9 +195,29 @@ Free HTML CSS Template
                 <div class="carousel-indicators" id="indicators"></div>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <section class="content-section section-gradient" id="about">
+        <div class="container">
+            <h2 class="section-title">Meet the Team</h2>
+                <div class="about-content">
+                <div class="about-side">
+                    <a href="team.html" class="feature-link">
+                        <div class="info-box">
+                            <div class="box-icon">
+                                🤝             
+                            </div>
+                            <p class="box-description">Learn about the people behind the SLAUGHDR.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery Section
     <section class="gallery-section section-gradient" id="gallery">
         <div class="container">
             <h2 class="section-title">Dynamic Gallery</h2>
@@ -218,7 +280,7 @@ Free HTML CSS Template
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 <script src="test.js"></script>
 <script src="tooplate-2144-parallax-scripts.js"></script>

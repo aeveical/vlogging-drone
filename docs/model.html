@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to SLAUGHDR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link href="slaughdr-main.css" rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="three"></canvas>
+    <div class="center-text" style="position: fixed; top: 20px; left: 20px;">
+        <a href="index.html" style="color: white; font-family: 'Space Grotesk', sans-serif; text-decoration: none;">Back to Home</a>
+    </div>
+    <section style="height: 1600vh; background: #303030;"></section>
+    <div id="story" style="color: white">
+        <div class="pixhawk" data-start="0.09888529306005034" data-end="0.17080186983099604">
+            <h1>Pixhawk</h1>
+            <p>Using Mission Planner, we loaded Ardupilot firmware which communicates with our flight controller and
+                Jetson.</p>
+        </div>
+        <div class="jetson" data-start="0.09888529306005034" data-end="0.17080186983099604">
+            <h1>Nvidia</h1>
+            <p>The brain of our drone. It hosts all the software and firmware for the computer vision and live web
+                hosting to view through the camera.</p>
+        </div>
+        <div class="camera" data-start="0.31743976547751485" data-end="0.3713772200029216">
+            <h1>IMX219 Camera</h1>
+            <p>Connected directly to our Jetson, this allows us to view users and control the drone autonomously.
+            </p>
+        </div>
+        <div class="vents" data-start="0.470190570149564" data-end="0.5479324159755933">
+            <h1>Cooling Vents</h1>
+            <p>We placed vents strategically around the body of the drone to make sure the electrical components
+                inside did not overheat.</p>
+        </div>
+        <div class="landing-gear" data-start="0.470190570149564" data-end="0.5479324159755933">
+            <h1>Landing Gear</h1>
+            <p>We designed landing gear to protect the drone from impact when falling.</p>
+        </div>
+        <div class="motors" data-start="0.7407407407407407" data-end="0.8216468896080547">
+            <h1>Propellers and Motors</h1>
+            <p>Two counterclockwise and two clockwise motors and propellers.</p>
+        </div>
+    </div>
+    <script type="module" src="/model.js"></script>
+</body>
+
+</html>

@@ -1037,10 +1037,11 @@ html {
 /* About Section */
 .about-content {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 	gap: 50px;
 	align-items: center;
-	margin: 50px 0;
+	margin: 50px auto;
+	justify-items: center; 
 }
 
 .about-text {
@@ -1868,6 +1869,14 @@ html {
 		width: 50px;
 		height: 50px;
 		font-size: 24px;
+		
+		/* Centering logic */
+		display: flex;
+		justify-content: center; /* Horizontal center */
+		align-items: center;     /* Vertical center */
+		
+		/* Center the 50px box itself within the parent info-box */
+		margin: 0 auto 15px auto;
 	}
 
 	.box-title {
@@ -2384,4 +2393,200 @@ html {
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 	}
+}
+
+
+.video-gallery {
+    display: grid;
+    /* Responsive columns: at least 300px, but fill row */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-flow: dense; 
+    grid-auto-rows: 250px; 
+    gap: 15px;
+    padding: 15px;
+    /* Prevent horizontal scroll caused by padding */
+    box-sizing: border-box; 
+}
+
+.cell {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: #111;
+    border-radius: 8px;
+}
+
+/* Vertical video spans 2 rows */
+.cell.vertical {
+    grid-row: span 2;
+}
+
+.cell video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Expansion Logic */
+.cell.expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    border-radius: 0;
+}
+
+.cell.expanded video {
+    object-fit: contain;
+    background: #000;
+}
+
+/* Overlay Logic */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    font-family: sans-serif;
+    opacity: 0;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.cell:hover .overlay {
+    opacity: 1;
+}
+
+/* Hide overlay when video is full screen */
+.cell.expanded .overlay {
+    display: none;
+}
+
+#three {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vw;
+    z-index: 0;
+}
+
+#section1 {
+    position: fixed;
+    color: 0x303030;
+    z-index: 1;
+    font-family: var(--font-heading);
+    text-align: center;
+}
+
+#story {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  font-family: var(--font-heading);
+  color: var(--primary);
+}
+
+.pixhawk {
+  position: absolute;
+  bottom: 50%;
+  right: 2%;
+  max-width: 400px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.jetson {
+  position: absolute;
+  top: 1%;
+  right: 10%;
+  max-width: 600px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.pixhawk.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jetson.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.camera {
+  position: absolute;
+  bottom: 50%;
+  left: 2%;
+  max-width: 200px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.camera.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vents {
+  position: absolute;
+  bottom: 50%;
+  left: 5%;
+  max-width: 300px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.vents.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.landing-gear {
+  position: absolute;
+  bottom: 30%;
+  right: 4%;
+  max-width: 300px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.landing-gear.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motors {
+  position: absolute;
+  bottom: 30%;
+  right: 4%;
+  max-width: 300px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.motors.active {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -1,40 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mechanical Design</title>
+    <title>Electrical Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link href="slaughdr-main.css" rel="stylesheet">
     <style>
-    .title-font {
-        font-family: var(--font-heading);
-        color: rgba(255, 255, 255, 0.9);
-        line-height: 1.8;
-        text-align: center;
-        font-weight: 400;
-        font-size: 0.9rem;
-        letter-spacing: 0.02em;
-    }
-    
+        .title-font {
+            font-family: var(--font-heading);
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            text-align: center;
+            font-weight: 400;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        .split-card {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 32px auto;
+            max-width: 1100px;
+            transition: background 0.3s ease;
+        }
+
+        .split-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .split-card.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .split-text {
+            flex: 1;
+        }
+
+        .split-text h3 {
+            font-family: var(--font-heading);
+            font-size: 1.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .split-text p {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .split-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .split-image img {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .photo-row {
+            display: flex;
+            gap: 16px;
+            margin: 40px auto;
+            max-width: 1000px;
+            justify-content: center;
+        }
+
+        .photo-row img {
+            width: 100%;
+            max-width: 320px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+
+            .split-card,
+            .split-card.reverse {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .split-image img {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
     <section class="content-section section-gradient" id="about">
         <div class="full-width-center">
-            <h2 class="section-title">Sfotware Design Decisions</h2>
-            <div class="centered-text">
-                
-                <div class="title-font">
-                        Much of the firmware used in this project was the pre-written code for the pixhawk. This includes code handling the different flight modes and the PID systems for throttle, pitch, roll and yaw. Essentially, this firmware interprets the messages sent by our software and outputs power commands for each of the four motors. While we did not write this firmware, we did research the drone control schemes and the math that determines throttle, pitch, roll, and yaw.
-	                    We did develop a full software stack for the drone running on the Nvidia Jetson. This relies on the following dependencies: OpenCV, YOLO, Mavpylink, numpy. At a high level, the software uses the camera input to identify a person, then determines what angle to turn to face that person. It then sends a command to the pixhawk to turn at this angle. While this seems very simple, it requires extensive knowledge of both YOLO and Mavpylink, as well as Ardupilot as a whole. We’ve implemented two classes and a main file to run class methods. The ‘Directions’ class handles all of the computer vision and outputs the directions for the drone. The ‘Control’ class handles the drone control, taking the directions as inputs and sending messages to the drone. In our main loop, Control is initialized first, with placeholder zeros for all of the direction inputs and the serial connection and baud rate parameters as static inputs. Then, control waits for a heartbeat signal from the pixhawk to confirm the connection. These heartbeat signals carry useful information about the current status of the flight. After confirming the connection, the Control class executes the ‘wait_for_control_v2’ method, which prevents the autonomous functions from being run until the drone is in the hold altitude mode HOLD_ALT. Once HOLD_ALT is confirmed, the directions class is initialized and the camera is started. At this point, the Jetson is receiving input from the camera and the autonomous variable is set to true, allowing the rest of the code to execute. 
-	                    The loop for autonomous control starts with a debugging print statement. Afterwards, the ‘get_directions’ method from the Directions class is run, which analyses the camera feed, identifies a person if it hasn’t already or keeps the window on the same person as previously identified, and computes the angle needed to turn towards the target. This is done by analysing the pixels between the center of the screen and the center of the target and converting to a raw yaw angle between -30 and 30 degrees. Then, Control is updated with this new yaw angle. If the yaw angle is greater than 5 degrees, Control executes the yaw_override method. Control overrides the RC yaw input with its own, a PWM value centered on a duty cycle of 1500. The method then adds 10 times the yaw angle to this PWM value, turning right if PWM is greater than 1500 and left otherwise. This has the drone turn according to the angle from the computer vision.
+            <h2 class="section-title">Firmware and Software</h2>
+            <section class="content-section section-gradient">
 
+                <div class="split-card">
+                    <div class="split-text">
+                        <h3>Firmware</h3>
+                        <p>Much of the firmware used in this project was the pre-written code for the Pixhawk. This includes
+                    code handling the different flight modes and the PID systems for throttle, pitch, roll and yaw.
+                    Essentially, this firmware interprets the messages sent by our software and outputs power commands
+                    for each of the four motors. While we did not write this firmware, we did research the drone control
+                    schemes and the math that determines throttle, pitch, roll, and yaw.
+                        </p>
+                    </div>
+                    <div class="split-image">
+                        <img src="assets/mission_planner.png" alt="mission">
+                    </div>
                 </div>
-            </div>
+                <div class="split-card reverse">
+                    <div class="split-text">
+                        <h3>Software Organization</h3>
+                        <p>We did develop a full software stack for the drone running on the Nvidia Jetson. This relies on the
+                    following dependencies: OpenCV, YOLO, Mavpylink, numpy. At a high level, the software uses the
+                    camera input to identify a person, then determines what angle to turn to face that person. It then
+                    sends a command to the Pixhawk to turn at this angle. While this seems very simple, it requires
+                    extensive knowledge of both YOLO and Mavpylink, as well as Ardupilot as a whole. We’ve implemented
+                    two classes and a main file to run class methods. The ‘Directions’ class handles all of the computer
+                    vision and outputs the directions for the drone. The ‘Control’ class handles the drone control,
+                    taking the directions as inputs and sending messages to the drone.</p>
+                    </div>
+                    <div class="split-image">
+                        <img src="assets/software_candid1.JPG" alt="candid1">
+                    </div>
+                </div>
+
+                <div class="split-card">
+                    <div class="split-text">
+                        <h3>Flight Control</h3>
+                        <p>In our main loop, Control is
+                    initialized first, with placeholder zeros for all of the direction inputs and the serial connection
+                    and baud rate parameters as static inputs. Then, control waits for a heartbeat signal from the
+                    Pixhawk to confirm the connection. These heartbeat signals carry useful information about the
+                    current status of the flight. After confirming the connection, the Control class executes the
+                    ‘wait_for_control_v2’ method, which prevents the autonomous functions from being run until the drone
+                    is in the hold altitude mode HOLD_ALT. Once HOLD_ALT is confirmed, the directions class is
+                    initialized and the camera is started. At this point, the Jetson is receiving input from the camera
+                    and the autonomous variable is set to true, allowing the rest of the code to execute.
+                    The loop for autonomous control starts with a debugging print statement. Afterwards, the
+                    ‘get_directions’ method from the Directions class is run, which analyses the camera feed, identifies
+                    a person if it hasn’t already or keeps the window on the same person as previously identified, and
+                    computes the angle needed to turn towards the target. This is done by analysing the pixels between
+                    the center of the screen and the center of the target and converting to a raw yaw angle between -30
+                    and 30 degrees. Then, Control is updated with this new yaw angle. If the yaw angle is greater than 5
+                    degrees, Control executes the yaw_override method. Control overrides the RC yaw input with its own,
+                    a PWM value centered on a duty cycle of 1500. The method then adds 10 times the yaw angle to this
+                    PWM value, turning right if PWM is greater than 1500 and left otherwise. This has the drone turn
+                    according to the angle from the computer vision.
+                        </p>
+                    </div>
+                    <div class="split-image">
+                        <img src="assets/trinity_holds_drone.png" alt="hold">
+                    </div>
+                </div>
+
+                <div class="split-card reverse">
+                    <div class="split-text">
+                        <h3>Facial Recognition</h3>
+                        <p>We used YOLOv11 to detect people and follow them. The architecture for it is pretty simple. We used a prebuilt dataset and filtered to train for only the faces (since the dataset itself contains photos for many objects, including chairs, computers, etc.). Once the model was trained and could recognize people, we had it latch onto the first person it detected. This meant that it would only recognize one person in the frame at a given time, until the original person stepped out of frame or was covered. The model using a bounding box to encompass the person in frame. We used the size of the bounding box to 1) determine how far away a person was and 2) to determine how much to move the drone. We calculated the center of the bounding box and how far it deviated from the center of the frame. That difference was using to calculated how far the drone needed to turn to keep the user in the center of the frame.</p>
+                    </div>
+                    <div class="split-image">
+                        <img src="assets/face_detection.png" alt="candid1">
+                    </div>
+                </div>
+                <div class="center" style="justify-content: center; align-items: center;"></div>
+                <a href="https://github.com/aeveical/vlogging-drone" style="color: rgba(255,255,255,0.85); font-family:'Space Grotesk', sans-serif; font-size: large;">Link to our Github</a>
+</div>
+                <!-- <div class="photo-row">
+                    <img src="assets/liam_working.jpg" alt="Team Photo">
+                    <img src="assets/trinity_solders.jpg" alt="Team Photo">
+                    <img src="assets/solder_cancer.jpg" alt="Team Photo">
+                </div> -->
+
+        </div>
+        <br>
+        <br>
+        <div class="center-text">
+            <a href="index.html" class="cta-button">Back to Home</a>
         </div>
     </section>
+    <script type="module" src="/model.js"></script>
+    <script src="slider.js"></script>
+    </section>
+
+    </div>
+    </section>
 </body>
+
 </html>

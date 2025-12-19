@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mechanical Design</title>
+    <title>Electrical Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -18,28 +18,155 @@
         font-size: 0.9rem;
         letter-spacing: 0.02em;
     }
+    .split-card {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 32px auto;
+    max-width: 1100px;
+    transition: background 0.3s ease;
+}
+
+.split-card:hover {
+    background: rgba(255,255,255,0.06);
+}
+
+.split-card.reverse {
+    flex-direction: row-reverse;
+}
+
+.split-text {
+    flex: 1;
+}
+
+.split-text h3 {
+    font-family: var(--font-heading);
+	font-size: 1.85rem;
+	font-weight: 600;
+	margin-bottom: 20px;
+	background: linear-gradient(135deg, var(--primary), var(--glow));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.split-text p {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+}
+
+.split-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.split-image img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+.photo-row {
+    display: flex;
+    gap: 16px;
+    margin: 40px auto;
+    max-width: 1000px;
+    justify-content: center;
+}
+
+.photo-row img {
+    width: 100%;
+    max-width: 320px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .split-card,
+    .split-card.reverse {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .split-image img {
+        max-width: 100%;
+    }
+}
+
     
     </style>
 </head>
 <body>
     <section class="content-section section-gradient" id="about">
         <div class="full-width-center">
-            <h2 class="section-title">Software Design Decisions</h2>
-            <div class="centered-text">
-                
-                <div class="title-font">
-                        When designing, we started with chosen motors and electronic speed controllers (ESCs). These were relatively high-power systems, so choosing a powerful, lightweight battery would be our next step. Our battery was selected due to its low price tag and good power to weight ratio. As we aimed to implement rapid-refresh image processing, the Nvidia jetson orin nano super was the most logical choice for a microcontroller due to its high processing power and computer vision compatibility. Initially, we planned to use a much cheaper, less robust flight controller however we decided to go with the industry standard pixhawk to deal with the more complicated instructions. 
-                        Once we had decided on all of our components, the next step was deciding wiring routes. The pixhawk came with a power module designed to divert directly from the battery, so that was an easy first step. The rest of the power would need to go to a power distribution board, then diverted to the ESCs and the Jetson. The Jetson and Pixhawk have built-in systems to power their peripherals, so the camera and RC receiver were easy to implement.
-                        The entire system is powered by a 6s, 6000mah 22 volt lipo battery. A power module splits this into a stepped-down 5V line for the pixhawk flight controller and a 22V line into a power distribution board (PDB). Another buck converter off of the PDB powers the Nvidia Jetson at 5V. Four 22V lines extend from the PDB to each of the ESCs, which connect to the motors. The Jetson provides power for the camera and the pixhawk provides power for the antenna. A typical control cycle consists of the following steps:
+            <h2 class="section-title">Electrical</h2>
+            <section class="content-section section-gradient">
+
+        <div class="split-card">
+            <div class="split-text">
+                <h3>Initial Design Process</h3>
+                <p>
+ When designing, we started with chosen motors and electronic speed controllers (ESCs). These were relatively high-power systems, so choosing a powerful, lightweight battery would be our next step. Our battery was selected due to its low price tag and good power to weight ratio. As we aimed to implement rapid-refresh image processing, the Nvidia Jetson Orin Nano Super was the most logical choice for a microcontroller due to its high processing power and computer vision compatibility. Initially, we planned to use a much cheaper, less robust flight controller however we decided to go with the industry standard Pixhawk to deal with the more complicated instructions. 
+                        Once we had decided on all of our components, the next step was deciding wiring routes. The Pixhawk came with a power module designed to divert directly from the battery, so that was an easy first step. The rest of the power would need to go to a power distribution board, then diverted to the ESCs and the Jetson. The Jetson and Pixhawk have built-in systems to power their peripherals, so the camera and RC receiver were easy to implement.
+                </p>
+            </div>
+            <div class="split-image">
+                <img src="assets/energy_diagram.png" alt="energy">
+            </div>
+        </div>
+        <div class="split-card reverse">
+            <div class="split-text">
+                <h3>Power</h3>
+                <p>The entire system is powered by a 6s, 6000mah 22.2V LIPO battery. A power module splits this into a stepped-down 5V line for the Pixhawk flight controller and a 22V line into a power distribution board (PDB). Another buck converter off of the PDB powers the Nvidia Jetson at 5V. Four 22V lines extend from the PDB to each of the ESCs, which connect to the motors. The Jetson provides power for the camera and the pixhawk provides power for the antenna.</p>
+            </div>
+            <div class="split-image">
+                <img src="assets/lipo_battery.jpg" alt="battery">
+            </div>
+        </div>
+    
+        <div class="split-card">
+            <div class="split-text">
+                <h3>Energy and Organization</h3>
+                <p>
+A typical control cycle consists of the following steps:
                         The Jetson reads the signal from the camera and runs computer vision to identify people
                         The Jetson calculates where in frame the target is and converts it to control signals (pitch, yaw, roll and throttle) which are sent to the pixhawk via telemetry lines.
                         The pixhawk determines the speed needed for each motor to run at that will result in the given directions being implemented and sends this via signal wires to the ESCs.
                         The ESCs draw the appropriate current to provide each motor with the correct speed that results in the directions being achieved.
                         The specific thrust from each motor causes the drone to fly/turn toward the target.
                         Throughout this process, data from the camera is recorded to the SD card on the Nvidia Jetson. We can then watch this back on any screen with an SD input. 
-                </div>
+                </p>
+            </div>
+            <div class="split-image">
+                <img src="assets/Circuit-Diagram.png" alt="circuit">
             </div>
         </div>
+
+        <div class="photo-row">
+                <img src="assets/liam_working.jpg" alt="Team Photo">
+                <img src="assets/trinity_solders.jpg" alt="Team Photo">
+                <img src="assets/solder_cancer.jpg" alt="Team Photo">
+        </div>
+<br>
+<br>
+    <div class="center-text">
+            <a href="index.html" class="cta-button">Back to Home</a>
+            </div>
     </section>
+    </div>
+</section>
+<script type="module" src="/model.js"></script>
+<script src="slider.js"></script>
 </body>
 </html>
